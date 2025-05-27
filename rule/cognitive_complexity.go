@@ -83,9 +83,8 @@ func (w cognitiveComplexityLinter) lintCognitiveComplexity() {
 }
 
 type cognitiveComplexityVisitor struct {
-	name         *ast.Ident
-	complexity   int
-	nestingLevel int
+	name       *ast.Ident
+	complexity int
 }
 
 // subTreeComplexity calculates the cognitive complexity of an AST-subtree.
@@ -117,7 +116,7 @@ func (v *cognitiveComplexityVisitor) Visit(n ast.Node) ast.Visitor {
 		v.walk(1, n.Body)
 		return nil
 	case *ast.FuncLit:
-		v.walk(0, n.Body) // do not increment the complexity, just do the nesting
+		v.walk(0, n.Body) // do not increment the complexity
 		return nil
 	case *ast.BinaryExpr:
 		v.complexity += v.binExpComplexity(n)
@@ -140,10 +139,7 @@ func (v *cognitiveComplexityVisitor) Visit(n ast.Node) ast.Visitor {
 }
 
 func (v *cognitiveComplexityVisitor) walk(complexityIncrement int, targets ...ast.Node) {
-	v.complexity += complexityIncrement + v.nestingLevel
-	nesting := v.nestingLevel
-	v.nestingLevel++
-
+	v.complexity += complexityIncrement
 	for _, t := range targets {
 		if t == nil {
 			continue
@@ -151,8 +147,6 @@ func (v *cognitiveComplexityVisitor) walk(complexityIncrement int, targets ...as
 
 		ast.Walk(v, t)
 	}
-
-	v.nestingLevel = nesting
 }
 
 func (v *cognitiveComplexityVisitor) walkIfElse(n *ast.IfStmt) {
@@ -170,12 +164,9 @@ func (v *cognitiveComplexityVisitor) walkIfElse(n *ast.IfStmt) {
 		}
 	}
 
-	// Nesting level is incremented in 'if' and 'else' blocks, but only the first 'if' in an 'if-else-if' chain sees its
-	// complexity increased by the nesting level.
-	v.complexity += 1 + v.nestingLevel
-	v.nestingLevel++
+	// Only the first 'if' in an if-else-if chain increases the complexity by one.
+	v.complexity++
 	w(n)
-	v.nestingLevel--
 }
 
 func (*cognitiveComplexityVisitor) binExpComplexity(n *ast.BinaryExpr) int {
