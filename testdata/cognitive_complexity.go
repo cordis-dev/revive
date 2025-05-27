@@ -62,10 +62,10 @@ func k(a, b, c, d, e, f bool) bool { // MATCH /function k has cognitive complexi
 }
 
 // Test nesting FOR expr + nested IF
-func l() { // MATCH /function l has cognitive complexity 6 (> max enabled 0)/
+func l() { // MATCH /function l has cognitive complexity 3 (> max enabled 0)/
 	for i := 1; i <= max; i++ { // +1
-		for j := 2; j < i; j++ { // +1 +1(nesting)
-			if i%j == 0 { // +1 +2(nesting)
+		for j := 2; j < i; j++ { // +1
+			if i%j == 0 { // +1
 				continue
 			}
 		}
@@ -76,10 +76,10 @@ func l() { // MATCH /function l has cognitive complexity 6 (> max enabled 0)/
 }
 
 // Test nesting IF
-func m() { // MATCH /function m has cognitive complexity 6 (> max enabled 0)/
+func m() { // MATCH /function m has cognitive complexity 3 (> max enabled 0)/
 	if i <= max { // +1
-		if j < i { // +1 +1(nesting)
-			if i%j == 0 { // +1 +2(nesting)
+		if j < i { // +1
+			if i%j == 0 { // +1
 				return 0
 			}
 		}
@@ -90,10 +90,10 @@ func m() { // MATCH /function m has cognitive complexity 6 (> max enabled 0)/
 }
 
 // Test nesting IF + nested FOR
-func n() { // MATCH /function n has cognitive complexity 6 (> max enabled 0)/
+func n() { // MATCH /function n has cognitive complexity 3 (> max enabled 0)/
 	if i > max { // +1
-		for j := 2; j < i; j++ { // +1 +1(nesting)
-			if i%j == 0 { // +1 +2(nesting)
+		for j := 2; j < i; j++ { // +1
+			if i%j == 0 { // +1
 				continue
 			}
 		}
@@ -104,10 +104,10 @@ func n() { // MATCH /function n has cognitive complexity 6 (> max enabled 0)/
 }
 
 // Test nesting
-func o() { // MATCH /function o has cognitive complexity 12 (> max enabled 0)/
+func o() { // MATCH /function o has cognitive complexity 6 (> max enabled 0)/
 	if i > max { // +1
-		if j < i { // +1 +1(nesting)
-			if i%j == 0 { // +1 +2(nesting)
+		if j < i { // +1
+			if i%j == 0 { // +1
 				return
 			}
 		}
@@ -116,8 +116,8 @@ func o() { // MATCH /function o has cognitive complexity 12 (> max enabled 0)/
 	}
 
 	if i > max { // +1
-		if j < i { // +1 +1(nesting)
-			if i%j == 0 { // +1 +2(nesting)
+		if j < i { // +1
+			if i%j == 0 { // +1
 				return
 			}
 		}
@@ -192,9 +192,9 @@ FirstLoop:
 }
 
 // Tests FUNC LITERAL
-func v() { // MATCH /function v has cognitive complexity 2 (> max enabled 0)/
+func v() { // MATCH /function v has cognitive complexity 1 (> max enabled 0)/
 	myFunc := func(b bool) {
-		if b { // +1 +1(nesting)
+		if b { // +1
 
 		}
 	}
@@ -204,21 +204,21 @@ func v() {
 	t.Run(tc.desc, func(t *testing.T) {})
 }
 
-func w() { // MATCH /function w has cognitive complexity 3 (> max enabled 0)/
+func w() { // MATCH /function w has cognitive complexity 2 (> max enabled 0)/
 	defer func(b bool) {
-		if b { // +1 +1(nesting)
+		if b { // +1
 
 		}
 	}(false || true) // +1
 }
 
 // Test from Cognitive Complexity white paper
-func sumOfPrimes(max int) int { // MATCH /function sumOfPrimes has cognitive complexity 7 (> max enabled 0)/
+func sumOfPrimes(max int) int { // MATCH /function sumOfPrimes has cognitive complexity 4 (> max enabled 0)/
 	total := 0
 OUT:
 	for i := 1; i <= max; i++ { // +1
-		for j := 2; j < i; j++ { // +1 +1(nesting)
-			if i%j == 0 { // +1 +2(nesting)
+		for j := 2; j < i; j++ { // +1
+			if i%j == 0 { // +1
 				continue OUT // +1
 			}
 		}
@@ -229,7 +229,7 @@ OUT:
 }
 
 // Test from K8S
-func (m *Migrator) MigrateIfNeeded(target *EtcdVersionPair) error { // MATCH /function (*Migrator).MigrateIfNeeded has cognitive complexity 18 (> max enabled 0)/
+func (m *Migrator) MigrateIfNeeded(target *EtcdVersionPair) error { // MATCH /function (*Migrator).MigrateIfNeeded has cognitive complexity 13 (> max enabled 0)/
 	klog.Infof("Starting migration to %s", target)
 	err := m.dataDirectory.Initialize(target)
 	if err != nil { // +1
@@ -243,7 +243,7 @@ func (m *Migrator) MigrateIfNeeded(target *EtcdVersionPair) error { // MATCH /fu
 	}
 	if vfExists { // +1
 		current, err = m.dataDirectory.versionFile.Read()
-		if err != nil { // +1 +1
+		if err != nil { // +1
 			return err
 		}
 	} else {
@@ -253,11 +253,11 @@ func (m *Migrator) MigrateIfNeeded(target *EtcdVersionPair) error { // MATCH /fu
 	for { // +1
 		klog.Infof("Converging current version '%s' to target version '%s'", current, target)
 		currentNextMinorVersion := &EtcdVersion{}
-		switch { // +1 +1
+		switch { // +1
 		case current.version.MajorMinorEquals(target.version) || currentNextMinorVersion.MajorMinorEquals(target.version): // +1
 			klog.Infof("current version '%s' equals or is one minor version previous of target version '%s' - migration complete", current, target)
 			err = m.dataDirectory.versionFile.Write(target)
-			if err != nil { // +1 +2
+			if err != nil { // +1
 				return fmt.Errorf("failed to write version.txt to '%s': %v", m.dataDirectory.path, err)
 			}
 			return nil
@@ -273,7 +273,7 @@ func (m *Migrator) MigrateIfNeeded(target *EtcdVersionPair) error { // MATCH /fu
 			klog.Infof("rolling etcd back from %s to %s", current, target)
 			current, err = m.rollbackEtcd3MinorVersion(current, target)
 		}
-		if err != nil { // +1 +1
+		if err != nil { // +1
 			return err
 		}
 	}
