@@ -1,8 +1,11 @@
-[![Build Status](https://github.com/mgechev/revive/actions/workflows/test.yaml/badge.svg)](https://github.com/mgechev/revive/actions/workflows/test.yaml)
-
 # revive
 
-Fast, configurable, extensible, flexible, and beautiful linter for Go. Drop-in replacement of golint. **`Revive` provides a framework for development of custom rules, and lets you define a strict preset for enhancing your development & code review processes**.
+[![Build Status](https://github.com/mgechev/revive/actions/workflows/test.yaml/badge.svg)](https://github.com/mgechev/revive/actions/workflows/test.yaml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/mgechev/revive.svg)](https://pkg.go.dev/github.com/mgechev/revive)
+
+Fast, configurable, extensible, flexible, and beautiful linter for Go. Drop-in replacement of golint.
+**`Revive` provides a framework for development of custom rules,
+and lets you define a strict preset for enhancing your development & code review processes**.
 
 <p align="center">
   <img src="./assets/logo.png" alt="" width="300">
@@ -17,48 +20,12 @@ Here's how `revive` is different from `golint`:
 - 2x faster running the same rules as golint.
 - Provides functionality for disabling a specific rule or the entire linter for a file or a range of lines.
   - `golint` allows this only for generated files.
-- Optional type checking. Most rules in golint do not require type checking. If you disable them in the config file, revive will run over 6x faster than golint.
+- Optional type checking. Most rules in golint do not require type checking.
+If you disable them in the config file, revive will run over 6x faster than golint.
 - Provides multiple formatters which let us customize the output.
 - Allows to customize the return code for the entire linter or based on the failure of only some rules.
 - _Everyone can extend it easily with custom rules or formatters._
 - `Revive` provides more rules compared to `golint`.
-
-## Who uses Revive
-
-- [`tidb`](https://github.com/pingcap/tidb) - TiDB is a distributed HTAP database compatible with the MySQL protocol
-- [`grafana`](https://github.com/grafana/grafana) - The tool for beautiful monitoring and metric analytics & dashboards for Graphite, InfluxDB & Prometheus & More
-- [`etcd`](https://github.com/etcd-io/etcd) - Distributed reliable key-value store for the most critical data of a distributed system
-- [`cadence`](https://github.com/uber/cadence) - Cadence is a distributed, scalable, durable, and highly available orchestration engine by Uber to execute asynchronous long-running business logic in a scalable and resilient way
-- [`ferret`](https://github.com/MontFerret/ferret) - Declarative web scraping
-- [`gopass`](https://github.com/gopasspw/gopass) - The slightly more awesome standard unix password manager for teams
-- [`gitea`](https://github.com/go-gitea/gitea) - Git with a cup of tea, painless self-hosted git service
-- [`excelize`](https://github.com/360EntSecGroup-Skylar/excelize) - Go library for reading and writing Microsoft Excel™ (XLSX) files
-- [`aurora`](https://github.com/xuri/aurora) - aurora is a web-based Beanstalk queue server console written in Go
-- [`soar`](https://github.com/XiaoMi/soar) - SQL Optimizer And Rewriter
-- [`pyroscope`](https://github.com/pyroscope-io/pyroscope) - Continuous profiling platform
-- [`gorush`](https://github.com/appleboy/gorush) - A push notification server written in Go (Golang).
-- [`dry`](https://github.com/moncho/dry) - dry - A Docker manager for the terminal.
-- [`go-echarts`](https://github.com/chenjiandongx/go-echarts) - The adorable charts library for Golang
-- [`reviewdog`](https://github.com/reviewdog/reviewdog) - Automated code review tool integrated with any code analysis tools regardless of programming language
-- [`rudder-server`](https://github.com/rudderlabs/rudder-server) - Privacy and Security focused Segment-alternative, in Golang and React.
-- [`sklearn`](https://github.com/pa-m/sklearn) - A partial port of scikit-learn written in Go.
-- [`protoc-gen-doc`](https://github.com/pseudomuto/protoc-gen-doc) - Documentation generator plugin for Google Protocol Buffers.
-- [`llvm`](https://github.com/llir/llvm) - Library for interacting with LLVM IR in pure Go.
-- [`jenkins-library`](https://github.com/SAP/jenkins-library) - Jenkins shared library for Continuous Delivery pipelines by SAP.
-- [`pd`](https://github.com/tikv/pd) - Placement driver for TiKV.
-- [`shellhub`](https://github.com/shellhub-io/shellhub) - ShellHub enables teams to easily access any Linux device behind firewall and NAT.
-- [`lorawan-stack`](https://github.com/TheThingsNetwork/lorawan-stack) - The Things Network Stack for LoRaWAN V3
-- [`gin-jwt`](https://github.com/appleboy/gin-jwt) - This is a JWT middleware for Gin framework.
-- [`gofight`](https://github.com/appleboy/gofight) - Testing API Handler written in Golang.
-- [`Beaver`](https://github.com/Clivern/Beaver) - A Real Time Messaging Server.
-- [`ggz`](https://github.com/go-ggz/ggz) - An URL shortener service written in Golang
-- [`Codeac.io`](https://www.codeac.io?ref=revive) - Automated code review service integrates with GitHub, Bitbucket and GitLab (even self-hosted) and helps you fight technical debt.
-- [`DevLake`](https://github.com/apache/incubator-devlake) - Apache DevLake is an open-source dev data platform to ingest, analyze, and visualize the fragmented data from DevOps tools，which can distill insights to improve engineering productivity.
-- [`checker`](https://github.com/cinar/checker) - Checker helps validating user input through rules defined in struct tags or directly through functions.
-- [`milvus`](https://github.com/milvus-io/milvus) - A cloud-native vector database, storage for next generation AI applications.
-- [`indicator`](https://github.com/cinar/indicator) - Indicator provides various technical analysis indicators, strategies, and a backtesting framework.
-
-*Open a PR to add your project*.
 
 <p align="center">
   <img src="./assets/demo.svg" alt="" width="700">
@@ -67,7 +34,6 @@ Here's how `revive` is different from `golint`:
 <!-- TOC -->
 
 - [revive](#revive)
-  - [Who uses Revive](#who-uses-revive)
   - [Installation](#installation)
   - [Usage](#usage)
     - [Docker](#docker)
@@ -106,7 +72,10 @@ Here's how `revive` is different from `golint`:
     - [golint](#golint)
     - [revive's speed](#revives-speed)
   - [Overriding colorization detection](#overriding-colorization-detection)
+  - [Who uses Revive](#who-uses-revive)
   - [Contributors](#contributors)
+    - [Maintainers](#maintainers)
+    - [All](#all)
   - [License](#license)
 
 <!-- /TOC -->
@@ -120,15 +89,18 @@ go install github.com/mgechev/revive@latest
 or get a released executable from the [Releases](https://github.com/mgechev/revive/releases) page.
 
 You can install the main branch (including the last commit) with:
+
 ```bash
 go install github.com/mgechev/revive@master
 ```
 
 ## Usage
 
-Since the default behavior of `revive` is compatible with `golint`, without providing any additional flags, the only difference you'd notice is faster execution.
+Since the default behavior of `revive` is compatible with `golint`, without providing any additional flags,the only difference you'd notice is faster execution.
 
-`revive` supports a `-config` flag whose value should correspond to a TOML file describing which rules to use for `revive`'s linting. If not provided, `revive` will try to use a global config file (assumed to be located at `$HOME/revive.toml`). Otherwise, if no configuration TOML file is found then `revive` uses a built-in set of default linting rules.
+`revive` supports a `-config` flag whose value should correspond to a TOML file describing which rules to use for `revive`'s linting.
+If not provided, `revive` will try to use a global config file (assumed to be located at `$HOME/revive.toml`).
+Otherwise, if no configuration TOML file is found then `revive` uses a built-in set of default linting rules.
 
 ### Docker
 
@@ -136,11 +108,11 @@ A volume must be mounted to share the current repository with the container.
 Please refer to the [bind mounts Docker documentation](https://docs.docker.com/storage/bind-mounts/)
 
 ```bash
-docker run -v "$(pwd)":/var/<repository> ghcr.io/mgechev/revive:v1.3.7 -config /var/<repository>/revive.toml -formatter stylish ./var/kidle/...
+docker run -v "$(pwd)":/var/YOUR_REPOSITORY ghcr.io/mgechev/revive:v1.3.7 -config /var/YOUR_REPOSITORY/revive.toml -formatter stylish ./var/YOUR_REPOSITORY/...
 ```
 
 - `-v` is for the volume
-- `ghcr.io/mgechev/revive:v1.3.7 ` is the image name and its version corresponds to `revive` command
+- `ghcr.io/mgechev/revive:v1.3.7` is the image name and its version corresponds to `revive` command
 - The provided flags are the same as the binary usage.
 
 ### Bazel
@@ -182,7 +154,11 @@ If you want to use revive with Bazel, look at the [rules](https://github.com/atl
 
 ### Continuous Integration
 
-[Codeac.io](https://www.codeac.io?ref=revive) - Automated code review service integrates with GitHub, Bitbucket and GitLab (even self-hosted) and helps you fight technical debt. Check your [pull-requests](https://www.codeac.io/documentation/pull-requests.html?ref=revive) with [revive](https://www.codeac.io/documentation/revive-configuration.html?ref=revive) automatically. (free for open-source projects)
+[Codeac.io](https://www.codeac.io?ref=revive) - Automated code review service integrates with GitHub,
+Bitbucket and GitLab (even self-hosted) and helps you fight technical debt.
+Check your [pull-requests](https://www.codeac.io/documentation/pull-requests.html?ref=revive) with
+[revive](https://www.codeac.io/documentation/revive-configuration.html?ref=revive) automatically.
+(Free for open-source projects)
 
 ### Linter aggregators
 
@@ -192,38 +168,47 @@ To enable `revive` in `golangci-lint` you need to add `revive` to the list of en
 
 ```yaml
 # golangci-lint configuration file
+version: "2"
 linters:
    enable:
      - revive
 ```
-Then `revive` can be configured by adding an entry to the `linters-settings` section of the configuration, for example:
+
+Then `revive` can be configured by adding an entry to the `linters.settings` section of the configuration, for example:
 
 ```yaml
 # golangci-lint configuration file
-linters-settings:
-  revive:
-    ignore-generated-header: true
-    severity: warning
-    rules:
-      - name: atomic
-      - name: line-length-limit
-        severity: error
-        arguments: [80]
-      - name: unhandled-error
-        arguments : ["fmt.Printf", "myFunction"]
+linters:
+  settings:
+    revive:
+      severity: warning
+      rules:
+        - name: atomic
+        - name: line-length-limit
+          severity: error
+          arguments: [80]
+        - name: unhandled-error
+          arguments: ["fmt.Printf", "myFunction"]
 ```
 
-The above configuration enables three rules of `revive`: _atomic_, _line-length-limit_ and _unhandled-error_ and pass some arguments to the last two.
-The [Configuration](#configuration) section of this document provides details on how to configure `revive`. Note that while `revive` configuration is in TOML, that of `golangci-lint` is in YAML.
+The above configuration enables three rules of `revive`: _atomic_, _line-length-limit_ and _unhandled-error_ and passes some arguments to the last two.
+The [Configuration](#configuration) section of this document provides details on how to configure `revive`.
+Note that while `revive` configuration is in TOML, that of `golangci-lint` is in YAML or JSON.
+See the [golangci-lint website](https://golangci-lint.run/usage/linters/#revive) for more information about configuring `revive`.
 
-Please notice that if no particular configuration is provided, `revive` will behave as `go-lint` does, i.e. all `go-lint` rules are enabled (the [Available Rules table](#available-rules) details what are the `go-lint` rules). When a configuration is provided, only rules in the configuration are enabled.
+Please notice that if no particular configuration is provided, `revive` will behave as `golint` does, i.e. all `golint` rules are enabled
+(the [Available Rules table](#available-rules) details what are the `golint` rules).
+When a configuration is provided, only rules in the configuration are enabled.
 
 ### Command Line Flags
 
 `revive` accepts the following command line parameters:
 
 - `-config [PATH]` - path to the config file in TOML format, defaults to `$HOME/revive.toml` if present.
-- `-exclude [PATTERN]` - pattern for files/directories/packages to be excluded for linting. You can specify the files you want to exclude for linting either as package name (i.e. `github.com/mgechev/revive`), list them as individual files (i.e. `file.go`), directories (i.e. `./foo/...`), or any combination of the three. If no exclusion patterns are specified, `vendor/...` will be excluded by default.
+- `-exclude [PATTERN]` - pattern for files/directories/packages to be excluded for linting.
+You can specify the files you want to exclude for linting either as package name (i.e. `github.com/mgechev/revive`),
+list them as individual files (i.e. `file.go`), directories (i.e. `./foo/...`), or any combination of the three.
+If no exclusion patterns are specified, `vendor/...` will be excluded by default.
 - `-formatter [NAME]` - formatter to be used for the output. The currently available formatters are:
 
   - `default` - will output the failures the same way that `golint` does.
@@ -235,7 +220,6 @@ Please notice that if no particular configuration is provided, `revive` will beh
 - `-max_open_files` -  maximum number of open files at the same time. Defaults to unlimited.
 - `-set_exit_status` - set exit status to 1 if any issues are found, overwrites `errorCode` and `warningCode` in config.
 - `-version` - get revive version.
-
 
 ### Sample Invocations
 
@@ -256,10 +240,12 @@ Using comments, you can disable the linter for the entire file or only a range o
 //revive:disable
 
 func Public() {}
+
 //revive:enable
 ```
 
-The snippet above, will disable `revive` between the `revive:disable` and `revive:enable` comments. If you skip `revive:enable`, the linter will be disabled for the rest of the file.
+The snippet above, will disable `revive` between the `revive:disable` and `revive:enable` comments.
+If you skip `revive:enable`, the linter will be disabled for the rest of the file.
 
 With `revive:disable-next-line` and `revive:disable-line` you can disable `revive` on a particular code line.
 
@@ -268,8 +254,9 @@ You can do the same on a rule level. In case you want to disable only a particul
 ```go
 //revive:disable:unexported-return
 func Public() private {
-  return private
+	return private
 }
+
 //revive:enable:unexported-return
 ```
 
@@ -295,7 +282,7 @@ in the configuration. You can set the severity (defaults to _warning_) of the vi
 
 ```toml
 [directive.specify-disable-reason]
-    severity = "error"
+severity = "error"
 ```
 
 ### Configuration
@@ -322,11 +309,11 @@ warningCode = 0
 # Configuration of the `cyclomatic` rule. Here we specify that
 # the rule should fail if it detects code with higher complexity than 10.
 [rule.cyclomatic]
-  arguments = [10]
+arguments = [10]
 
 # Sets the severity of the `package-comments` rule to "error".
 [rule.package-comments]
-  severity = "error"
+severity = "error"
 ```
 
 By default `revive` will enable only the linting rules that are named in the configuration file.
@@ -345,11 +332,12 @@ For example:
 
 ```toml
 [rule.line-length-limit]
-    Disabled = true
+Disabled = true
 ```
 
 When enabling all rules you still need/can provide specific configurations for rules.
-The following file is an example configuration where all rules are enabled, except for those that are explicitly disabled, and some rules are configured with particular arguments:
+The following file is an example configuration where all rules are enabled, except for those that are explicitly disabled,
+and some rules are configured with particular arguments:
 
 ```toml
 severity = "warning"
@@ -362,34 +350,35 @@ enableAllRules = true
 
 # Disabled rules
 [rule.blank-imports]
-    Disabled = true
+Disabled = true
 [rule.file-header]
-    Disabled = true
+Disabled = true
 [rule.max-public-structs]
-    Disabled = true
+Disabled = true
 [rule.line-length-limit]
-    Disabled = true
+Disabled = true
 [rule.function-length]
-    Disabled = true
+Disabled = true
 [rule.banned-characters]
-    Disabled = true
+Disabled = true
 
 # Rule tuning
 [rule.argument-limit]
-    Arguments = [5]
+Arguments = [5]
 [rule.cyclomatic]
-    Arguments = [10]
+Arguments = [10]
 [rule.cognitive-complexity]
-    Arguments = [7]
+Arguments = [7]
 [rule.function-result-limit]
-    Arguments = [3]
+Arguments = [3]
 [rule.error-strings]
-    Arguments = ["mypackage.Error"]
+Arguments = ["mypackage.Error"]
 ```
 
 ### Default Configuration
 
-The default configuration of `revive` can be found at `defaults.toml`. This will enable all rules available in `golint` and use their default configuration (i.e. the way they are hardcoded in `golint`).
+The default configuration of `revive` can be found at `defaults.toml`.
+This will enable all rules available in `golint` and use their default configuration (i.e. the way they are hardcoded in `golint`).
 
 ```shell
 revive -config defaults.toml github.com/mgechev/revive
@@ -455,9 +444,9 @@ errorCode = 0
 warningCode = 0
 
 [rule.blank-imports]
-   Exclude=["**/*.pb.go"]
+Exclude = ["**/*.pb.go"]
 [rule.context-as-argument]
-   Exclude=["src/somepkg/*.go", "TEST"]
+Exclude = ["src/somepkg/*.go", "TEST"]
 ```
 
 You can use the following exclude patterns
@@ -475,6 +464,7 @@ You can use the following exclude patterns
 ## Available Rules
 
 List of all available rules. The rules ported from `golint` are left unchanged and indicated in the `golint` column.
+
 | Name                  | Config | Description                                                      | `golint` | Typed |
 | --------------------- | :----: | :--------------------------------------------------------------- | :------: | :---: |
 | [`add-constant`](./RULES_DESCRIPTIONS.md#add-constant)        |  map   | Suggests using constant for magic numbers and string literals    |    no    |  no   |
@@ -519,7 +509,7 @@ List of all available rules. The rules ported from `golint` are left unchanged a
 | [`get-return`](./RULES_DESCRIPTIONS.md#get-return)          |  n/a   | Warns on getters that do not yield any result                    |    no    |  no   |
 | [`identical-branches`](./RULES_DESCRIPTIONS.md#identical-branches)          |  n/a   | Spots if-then-else statements with identical `then` and `else` branches       |    no    |  no   |
 | [`if-return`](./RULES_DESCRIPTIONS.md#if-return)           |  n/a   | Redundant if when returning an error.                            |   no    |  no   |
-| [`import-alias-naming`](./RULES_DESCRIPTIONS.md#import-alias-naming)         | string or map[string]string (defaults to allow regex pattern ^[a-z][a-z0-9]{0,}$) | Conventions around the naming of import aliases.                              |    no    |  no   |
+| [`import-alias-naming`](./RULES_DESCRIPTIONS.md#import-alias-naming)         | string or map[string]string (defaults to allow regex pattern `^[a-z][a-z0-9]{0,}$`) | Conventions around the naming of import aliases.                              |    no    |  no   |
 | [`import-shadowing`](./RULES_DESCRIPTIONS.md#import-shadowing)   | n/a    | Spots identifiers that shadow an import    |    no    |  no   |
 | [`imports-blocklist`](./RULES_DESCRIPTIONS.md#imports-blocklist)   | []string | Disallows importing the specified packages                     |    no    |  no   |
 | [`increment-decrement`](./RULES_DESCRIPTIONS.md#increment-decrement) |  n/a   | Use `i++` and `i--` instead of `i += 1` and `i -= 1`.            |   yes    |  no   |
@@ -544,6 +534,7 @@ List of all available rules. The rules ported from `golint` are left unchanged a
 | [`string-of-int`](./RULES_DESCRIPTIONS.md#string-of-int)          |  n/a   | Warns on suspicious casts from int to string            |    no    |  yes   |
 | [`struct-tag`](./RULES_DESCRIPTIONS.md#struct-tag)          |  []string   | Checks common struct tags like `json`, `xml`, `yaml`               |    no    |  no   |
 | [`superfluous-else`](./RULES_DESCRIPTIONS.md#superfluous-else)    |  []string   | Prevents redundant else statements (extends [`indent-error-flow`](./RULES_DESCRIPTIONS.md#indent-error-flow)) |    no    |  no   |
+| [`time-date`](./RULES_DESCRIPTIONS.md#time-date)         |  n/a   | Reports bad usage of `time.Date`.                 |   no    |  yes  |
 | [`time-equal`](./RULES_DESCRIPTIONS.md#time-equal)         |  n/a   | Suggests to use `time.Time.Equal` instead of `==` and `!=` for equality check time.                 |   no    |  yes  |
 | [`time-naming`](./RULES_DESCRIPTIONS.md#time-naming)         |  n/a   | Conventions around the naming of time variables.                 |   yes    |  yes  |
 | [`unchecked-type-assertions`](./RULES_DESCRIPTIONS.md#unchecked-type-assertions)         |  n/a   | Disallows type assertions without checking the result.                 |   no    |  yes  |
@@ -551,12 +542,14 @@ List of all available rules. The rules ported from `golint` are left unchanged a
 | [`unexported-naming`](./RULES_DESCRIPTIONS.md#unexported-naming)          |  n/a   |  Warns on wrongly named un-exported symbols       |    no    |  no   |
 | [`unexported-return`](./RULES_DESCRIPTIONS.md#unexported-return)   |  n/a   | Warns when a public return is from unexported type.              |   yes    |  yes  |
 | [`unhandled-error`](./RULES_DESCRIPTIONS.md#unhandled-error)   | []string   | Warns on unhandled errors returned by function calls    |    no    |  yes   |
+| [`unnecessary-format`](./RULES_DESCRIPTIONS.md#unnecessary-format)    |  n/a   | Identifies calls to formatting functions where the format string does not contain any formatting verbs          |    no    |  no   |
 | [`unnecessary-stmt`](./RULES_DESCRIPTIONS.md#unnecessary-stmt)    |  n/a   | Suggests removing or simplifying unnecessary statements          |    no    |  no   |
 | [`unreachable-code`](./RULES_DESCRIPTIONS.md#unreachable-code)    |  n/a   | Warns on unreachable code                                        |    no    |  no   |
 | [`unused-parameter`](./RULES_DESCRIPTIONS.md#unused-parameter)    |  n/a   | Suggests to rename or remove unused function parameters          |    no    |  no   |
 | [`unused-receiver`](./RULES_DESCRIPTIONS.md#unused-receiver)   | n/a    | Suggests to rename or remove unused method receivers    |    no    |  no   |
 | [`use-any`](./RULES_DESCRIPTIONS.md#use-any)          |  n/a   |  Proposes to replace `interface{}` with its alias `any` |    no    |  no   |
 | [`use-errors-new`](./RULES_DESCRIPTIONS.md#use-errors-new) | n/a   | Spots calls to `fmt.Errorf` that can be replaced by `errors.New` |   no    |  no   |
+| [`use-fmt-print`](./RULES_DESCRIPTIONS.md#use-fmt-print) | n/a   | Proposes to replace calls to built-in `print` and `println` with their equivalents from `fmt`. |   no    |  no   |
 | [`useless-break`](./RULES_DESCRIPTIONS.md#useless-break)          |  n/a   |  Warns on useless `break` statements in case clauses |    no    |  no   |
 | [`var-declaration`](./RULES_DESCRIPTIONS.md#var-declaration)     |  n/a   | Reduces redundancies around variable declaration.                |   yes    |  yes  |
 | [`var-naming`](./RULES_DESCRIPTIONS.md#var-naming)          |  allowlist & blocklist of initialisms   | Naming rules.                                                    |   yes    |  no   |
@@ -568,11 +561,12 @@ Here you can find how you can configure some existing rules:
 
 ### `var-naming`
 
-This rule accepts two slices of strings, an allowlist and a blocklist of initialisms. By default, the rule behaves exactly as the alternative in `golint` but optionally, you can relax it (see [golint/lint/issues/89](https://github.com/golang/lint/issues/89))
+This rule accepts two slices of strings, an allowlist and a blocklist of initialisms. By default, the rule behaves exactly as the alternative
+in `golint` but optionally, you can relax it (see [golint/lint/issues/89](https://github.com/golang/lint/issues/89))
 
 ```toml
 [rule.var-naming]
-  arguments = [["ID"], ["VM"]]
+arguments = [["ID"], ["VM"]]
 ```
 
 This way, revive will not warn for an identifier called `customId` but will warn that `customVm` should be called `customVM`.
@@ -621,7 +615,8 @@ The `checkstyle` formatter produces output in a [Checkstyle-like](https://checks
 
 ### SARIF
 
-The `sarif`  formatter produces output in SARIF, for _Static Analysis Results Interchange Format_, a standard JSON-based format for the output of static analysis tools defined and promoted by [OASIS](https://www.oasis-open.org/).
+The `sarif`  formatter produces output in SARIF, for _Static Analysis Results Interchange Format_,
+a standard JSON-based format for the output of static analysis tools defined and promoted by [OASIS](https://www.oasis-open.org/).
 
 Current supported version of the standard is [SARIF-v2.1.0](https://docs.oasis-open.org/sarif/sarif/v2.1.0/csprd01/sarif-v2.1.0-csprd01.html
 ).
@@ -632,7 +627,8 @@ The tool can be extended with custom rules or formatters. This section contains 
 
 To extend the linter with a custom rule you can push it to this repository or use `revive` as a library (see below)
 
-To add a custom formatter you'll have to push it to this repository or fork it. This is due to the limited `-buildmode=plugin` support which [works only on Linux (with known issues)](https://golang.org/pkg/plugin/).
+To add a custom formatter you'll have to push it to this repository or fork it.
+This is due to the limited `-buildmode=plugin` support which [works only on Linux (with known issues)](https://golang.org/pkg/plugin/).
 
 ### Writing a Custom Rule
 
@@ -667,7 +663,9 @@ func (f myRule) Name() string {
 	return "myRule"
 }
 
-func (f myRule) Apply(*lint.File, lint.Arguments) []lint.Failure { ... }
+func (f myRule) Apply(*lint.File, lint.Arguments) []lint.Failure {
+	// ...
+}
 ```
 
 You can still go further and use `revive` without its CLI, as part of your library, or your CLI:
@@ -676,39 +674,39 @@ You can still go further and use `revive` without its CLI, as part of your libra
 package mylib
 
 import (
-	"github.com/mgechev/revive/cli"
-	"github.com/mgechev/revive/revivelib"
+	"github.com/mgechev/revive/config"
 	"github.com/mgechev/revive/lint"
+	"github.com/mgechev/revive/revivelib"
 )
 
 // Error checking removed for clarity
 func LintMyFile(file string) {
-	conf, _:= config.GetConfig("../defaults.toml")
+	conf, _ := config.GetConfig("../defaults.toml")
 
 	revive, _ := revivelib.New(
-		conf,  // Configuration file
-		true,  // Set exit status
-		2048,  // Max open files
+		conf, // Configuration file
+		true, // Set exit status
+		2048, // Max open files
 
 		// Then add as many extra rules as you need
 		revivelib.NewExtraRule(&myRule{}, lint.RuleConfig{}),
 	)
 
 	failuresChan, err := revive.Lint(
- 		revivelib.Include(file),
- 		revivelib.Exclude("./fixtures"),
- 		// You can use as many revivelib.Include or revivelib.Exclude as required
- 	)
-  	if err != nil {
-  	 	panic("Shouldn't have failed: " + err.Error())
-  	}
+		revivelib.Include(file),
+		revivelib.Exclude("./fixtures"),
+		// You can use as many revivelib.Include or revivelib.Exclude as required
+	)
+	if err != nil {
+		panic("Shouldn't have failed: " + err.Error())
+	}
 
-  	// Now let's return the formatted errors
+	// Now let's return the formatted errors
 	failures, exitCode, _ := revive.Format("stylish", failuresChan)
 
-  	// failures is the string with all formatted lint error messages
-  	// exit code is 0 if no errors, 1 if errors (unless config options change it)
-  	// ... do something with them
+	// failures is the string with all formatted lint error messages
+	// exit code is 0 if no errors, 1 if errors (unless config options change it)
+	// ... do something with them
 }
 
 type myRule struct{}
@@ -717,7 +715,9 @@ func (f myRule) Name() string {
 	return "myRule"
 }
 
-func (f myRule) Apply(*lint.File, lint.Arguments) []lint.Failure { ... }
+func (f myRule) Apply(*lint.File, lint.Arguments) []lint.Failure {
+	// ...
+}
 ```
 
 ### Custom Formatter
@@ -731,18 +731,21 @@ type Formatter interface {
 }
 ```
 
-The `Format` method accepts a channel of `Failure` instances and the configuration of the enabled rules. The `Name()` method should return a string different from the names of the already existing rules. This string is used when specifying the formatter when invoking the `revive` CLI tool.
+The `Format` method accepts a channel of `Failure` instances and the configuration of the enabled rules.
+The `Name()` method should return a string different from the names of the already existing rules.
+This string is used when specifying the formatter when invoking the `revive` CLI tool.
 
 For a sample formatter, take a look at [this file](/formatter/json.go).
 
 ## Speed Comparison
 
-Compared to `golint`, `revive` performs better because it lints the files for each individual rule into a separate goroutine. Here's a basic performance benchmark on MacBook Pro Early 2013 run on Kubernetes:
+Compared to `golint`, `revive` performs better because it lints the files for each individual rule into a separate goroutine.
+Here's a basic performance benchmark on MacBook Pro Early 2013 run on Kubernetes:
 
 ### golint
 
-```shell
-time golint kubernetes/... > /dev/null
+```shellsession
+$ time golint kubernetes/... > /dev/null
 
 real    0m54.837s
 user    0m57.844s
@@ -751,9 +754,9 @@ sys     0m9.146s
 
 ### revive's speed
 
-```shell
+```shellsession
 # no type checking
-time revive -config untyped.toml kubernetes/... > /dev/null
+$ time revive -config untyped.toml kubernetes/... > /dev/null
 
 real    0m8.471s
 user    0m40.721s
@@ -762,9 +765,9 @@ sys     0m3.262s
 
 Keep in mind that if you use rules that require type checking, the performance may drop to 2x faster than `golint`:
 
-```shell
+```shellsession
 # type checking enabled
-time revive kubernetes/... > /dev/null
+$ time revive kubernetes/... > /dev/null
 
 real    0m26.211s
 user    2m6.708s
@@ -785,83 +788,62 @@ To force colorization, add `REVIVE_FORCE_COLOR=1` to the environment you're runn
 REVIVE_FORCE_COLOR=1 revive -formatter friendly ./... | tee revive.log
 ```
 
+## Who uses Revive
+
+<!-- markdownlint-disable MD013 -->
+
+- [`tidb`](https://github.com/pingcap/tidb) - TiDB is a distributed HTAP database compatible with the MySQL protocol
+- [`grafana`](https://github.com/grafana/grafana) - The tool for beautiful monitoring and metric analytics & dashboards for Graphite, InfluxDB & Prometheus & More
+- [`etcd`](https://github.com/etcd-io/etcd) - Distributed reliable key-value store for the most critical data of a distributed system
+- [`cadence`](https://github.com/uber/cadence) - Cadence is a distributed, scalable, durable, and highly available orchestration engine by Uber to execute asynchronous long-running business logic in a scalable and resilient way
+- [`ferret`](https://github.com/MontFerret/ferret) - Declarative web scraping
+- [`gopass`](https://github.com/gopasspw/gopass) - The slightly more awesome standard unix password manager for teams
+- [`gitea`](https://github.com/go-gitea/gitea) - Git with a cup of tea, painless self-hosted git service
+- [`excelize`](https://github.com/360EntSecGroup-Skylar/excelize) - Go library for reading and writing Microsoft Excel™ (XLSX) files
+- [`aurora`](https://github.com/xuri/aurora) - aurora is a web-based Beanstalk queue server console written in Go
+- [`soar`](https://github.com/XiaoMi/soar) - SQL Optimizer And Rewriter
+- [`pyroscope`](https://github.com/pyroscope-io/pyroscope) - Continuous profiling platform
+- [`gorush`](https://github.com/appleboy/gorush) - A push notification server written in Go (Golang).
+- [`dry`](https://github.com/moncho/dry) - dry - A Docker manager for the terminal.
+- [`go-echarts`](https://github.com/chenjiandongx/go-echarts) - The adorable charts library for Golang
+- [`reviewdog`](https://github.com/reviewdog/reviewdog) - Automated code review tool integrated with any code analysis tools regardless of programming language
+- [`rudder-server`](https://github.com/rudderlabs/rudder-server) - Privacy and Security focused Segment-alternative, in Golang and React.
+- [`sklearn`](https://github.com/pa-m/sklearn) - A partial port of scikit-learn written in Go.
+- [`protoc-gen-doc`](https://github.com/pseudomuto/protoc-gen-doc) - Documentation generator plugin for Google Protocol Buffers.
+- [`llvm`](https://github.com/llir/llvm) - Library for interacting with LLVM IR in pure Go.
+- [`jenkins-library`](https://github.com/SAP/jenkins-library) - Jenkins shared library for Continuous Delivery pipelines by SAP.
+- [`pd`](https://github.com/tikv/pd) - Placement driver for TiKV.
+- [`shellhub`](https://github.com/shellhub-io/shellhub) - ShellHub enables teams to easily access any Linux device behind firewall and NAT.
+- [`lorawan-stack`](https://github.com/TheThingsNetwork/lorawan-stack) - The Things Network Stack for LoRaWAN V3
+- [`gin-jwt`](https://github.com/appleboy/gin-jwt) - This is a JWT middleware for Gin framework.
+- [`gofight`](https://github.com/appleboy/gofight) - Testing API Handler written in Golang.
+- [`Beaver`](https://github.com/Clivern/Beaver) - A Real Time Messaging Server.
+- [`ggz`](https://github.com/go-ggz/ggz) - An URL shortener service written in Golang
+- [`Codeac.io`](https://www.codeac.io?ref=revive) - Automated code review service integrates with GitHub, Bitbucket and GitLab (even self-hosted) and helps you fight technical debt.
+- [`DevLake`](https://github.com/apache/incubator-devlake) - Apache DevLake is an open-source dev data platform to ingest, analyze, and visualize the fragmented data from DevOps tools，which can distill insights to improve engineering productivity.
+- [`checker`](https://github.com/cinar/checker) - Checker helps validating user input through rules defined in struct tags or directly through functions.
+- [`milvus`](https://github.com/milvus-io/milvus) - A cloud-native vector database, storage for next generation AI applications.
+- [`indicator`](https://github.com/cinar/indicator) - Indicator provides various technical analysis indicators, strategies, and a backtesting framework.
+
+<!-- markdownlint-enable MD013 -->
+
+_Open a PR to add your project_.
+
 ## Contributors
 
-[<img alt="mgechev" src="https://avatars.githubusercontent.com/u/455023?v=4&s=117" width="117">](https://github.com/mgechev) |[<img alt="chavacava" src="https://avatars.githubusercontent.com/u/25788468?v=4&s=117" width="117">](https://github.com/chavacava) |[<img alt="denisvmedia" src="https://avatars.githubusercontent.com/u/5462781?v=4&s=117" width="117">](https://github.com/denisvmedia) |[<img alt="mfederowicz" src="https://avatars.githubusercontent.com/u/57678185?v=4&s=117" width="117">](https://github.com/mfederowicz) |[<img alt="xuri" src="https://avatars.githubusercontent.com/u/2809468?v=4&s=117" width="117">](https://github.com/xuri) |[<img alt="alexandear" src="https://avatars.githubusercontent.com/u/3228886?v=4&s=117" width="117">](https://github.com/alexandear) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[mgechev](https://github.com/mgechev) |[chavacava](https://github.com/chavacava) |[denisvmedia](https://github.com/denisvmedia) |[mfederowicz](https://github.com/mfederowicz) |[xuri](https://github.com/xuri) |[alexandear](https://github.com/alexandear) |
+### Maintainers
 
-[<img alt="ldez" src="https://avatars.githubusercontent.com/u/5674651?v=4&s=117" width="117">](https://github.com/ldez) |[<img alt="doniacld" src="https://avatars.githubusercontent.com/u/19799268?v=4&s=117" width="117">](https://github.com/doniacld) |[<img alt="Clivern" src="https://avatars.githubusercontent.com/u/1634427?v=4&s=117" width="117">](https://github.com/Clivern) |[<img alt="morphy2k" src="https://avatars.githubusercontent.com/u/4280578?v=4&s=117" width="117">](https://github.com/morphy2k) |[<img alt="bernhardreisenberger" src="https://avatars.githubusercontent.com/u/5809300?v=4&s=117" width="117">](https://github.com/bernhardreisenberger) |[<img alt="dshemin" src="https://avatars.githubusercontent.com/u/11780307?v=4&s=117" width="117">](https://github.com/dshemin) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[ldez](https://github.com/ldez) |[doniacld](https://github.com/doniacld) |[Clivern](https://github.com/Clivern) |[morphy2k](https://github.com/morphy2k) |[bernhardreisenberger](https://github.com/bernhardreisenberger) |[dshemin](https://github.com/dshemin) |
+[<img alt="mgechev" src="https://avatars.githubusercontent.com/u/455023?v=4&s=100" width="100">](https://github.com/mgechev) |[<img alt="chavacava" src="https://avatars.githubusercontent.com/u/25788468?v=4&s=100" width="100">](https://github.com/chavacava) |[<img alt="denisvmedia" src="https://avatars.githubusercontent.com/u/5462781?v=4&s=100" width="100">](https://github.com/denisvmedia) |[<img alt="alexandear" src="https://avatars.githubusercontent.com/u/3228886?v=4&s=100" width="100">](https://github.com/alexandear) |
+:---: |:---: |:---: |:---: |
+[mgechev](https://github.com/mgechev) |[chavacava](https://github.com/chavacava) |[denisvmedia](https://github.com/denisvmedia) |[alexandear](https://github.com/alexandear) |
 
-[<img alt="butuzov" src="https://avatars.githubusercontent.com/u/651824?v=4&s=117" width="117">](https://github.com/butuzov) |[<img alt="comdiv" src="https://avatars.githubusercontent.com/u/2387862?v=4&s=117" width="117">](https://github.com/comdiv) |[<img alt="heynemann" src="https://avatars.githubusercontent.com/u/60965?v=4&s=117" width="117">](https://github.com/heynemann) |[<img alt="gsamokovarov" src="https://avatars.githubusercontent.com/u/604618?v=4&s=117" width="117">](https://github.com/gsamokovarov) |[<img alt="mdelah" src="https://avatars.githubusercontent.com/u/4904544?v=4&s=117" width="117">](https://github.com/mdelah) |[<img alt="tymonx" src="https://avatars.githubusercontent.com/u/8367378?v=4&s=117" width="117">](https://github.com/tymonx) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[butuzov](https://github.com/butuzov) |[comdiv](https://github.com/comdiv) |[heynemann](https://github.com/heynemann) |[gsamokovarov](https://github.com/gsamokovarov) |[mdelah](https://github.com/mdelah) |[tymonx](https://github.com/tymonx) |
+### All
 
-[<img alt="sina-devel" src="https://avatars.githubusercontent.com/u/61763643?v=4&s=117" width="117">](https://github.com/sina-devel) |[<img alt="rawen17" src="https://avatars.githubusercontent.com/u/36483900?v=4&s=117" width="117">](https://github.com/rawen17) |[<img alt="dominiquelefevre" src="https://avatars.githubusercontent.com/u/54854047?v=4&s=117" width="117">](https://github.com/dominiquelefevre) |[<img alt="git-hulk" src="https://avatars.githubusercontent.com/u/4987594?v=4&s=117" width="117">](https://github.com/git-hulk) |[<img alt="shmsr" src="https://avatars.githubusercontent.com/u/51480165?v=4&s=117" width="117">](https://github.com/shmsr) |[<img alt="ytnsym" src="https://avatars.githubusercontent.com/u/57400690?v=4&s=117" width="117">](https://github.com/ytnsym) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[sina-devel](https://github.com/sina-devel) |[rawen17](https://github.com/rawen17) |[dominiquelefevre](https://github.com/dominiquelefevre) |[git-hulk](https://github.com/git-hulk) |[shmsr](https://github.com/shmsr) |[ytnsym](https://github.com/ytnsym) |
+This project exists thanks to all the people who contribute.
 
-[<img alt="zimmski" src="https://avatars.githubusercontent.com/u/1847950?v=4&s=117" width="117">](https://github.com/zimmski) |[<img alt="mapreal19" src="https://avatars.githubusercontent.com/u/3055997?v=4&s=117" width="117">](https://github.com/mapreal19) |[<img alt="cce" src="https://avatars.githubusercontent.com/u/51567?v=4&s=117" width="117">](https://github.com/cce) |[<img alt="skaji" src="https://avatars.githubusercontent.com/u/1589550?v=4&s=117" width="117">](https://github.com/skaji) |[<img alt="ccoVeille" src="https://avatars.githubusercontent.com/u/3875889?v=4&s=117" width="117">](https://github.com/ccoVeille) |[<img alt="tamird" src="https://avatars.githubusercontent.com/u/1535036?v=4&s=117" width="117">](https://github.com/tamird) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[zimmski](https://github.com/zimmski) |[mapreal19](https://github.com/mapreal19) |[cce](https://github.com/cce) |[skaji](https://github.com/skaji) |[ccoVeille](https://github.com/ccoVeille) |[tamird](https://github.com/tamird) |
-
-[<img alt="markelog" src="https://avatars.githubusercontent.com/u/945528?v=4&s=117" width="117">](https://github.com/markelog) |[<img alt="mihaitodor" src="https://avatars.githubusercontent.com/u/788216?v=4&s=117" width="117">](https://github.com/mihaitodor) |[<img alt="dvejmz" src="https://avatars.githubusercontent.com/u/9487006?v=4&s=117" width="117">](https://github.com/dvejmz) |[<img alt="abeltay" src="https://avatars.githubusercontent.com/u/15604207?v=4&s=117" width="117">](https://github.com/abeltay) |[<img alt="damif94" src="https://avatars.githubusercontent.com/u/29461526?v=4&s=117" width="117">](https://github.com/damif94) |[<img alt="Groxx" src="https://avatars.githubusercontent.com/u/77197?v=4&s=117" width="117">](https://github.com/Groxx) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[markelog](https://github.com/markelog) |[mihaitodor](https://github.com/mihaitodor) |[dvejmz](https://github.com/dvejmz) |[abeltay](https://github.com/abeltay) |[damif94](https://github.com/damif94) |[Groxx](https://github.com/Groxx) |
-
-[<img alt="StephenButtolph" src="https://avatars.githubusercontent.com/u/22109487?v=4&s=117" width="117">](https://github.com/StephenButtolph) |[<img alt="StephenBrown2" src="https://avatars.githubusercontent.com/u/1148665?v=4&s=117" width="117">](https://github.com/StephenBrown2) |[<img alt="lsytj0413" src="https://avatars.githubusercontent.com/u/6871552?v=4&s=117" width="117">](https://github.com/lsytj0413) |[<img alt="qascade" src="https://avatars.githubusercontent.com/u/54154054?v=4&s=117" width="117">](https://github.com/qascade) |[<img alt="ridvansumset" src="https://avatars.githubusercontent.com/u/26631560?v=4&s=117" width="117">](https://github.com/ridvansumset) |[<img alt="rliebz" src="https://avatars.githubusercontent.com/u/5321575?v=4&s=117" width="117">](https://github.com/rliebz) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[StephenButtolph](https://github.com/StephenButtolph) |[StephenBrown2](https://github.com/StephenBrown2) |[lsytj0413](https://github.com/lsytj0413) |[qascade](https://github.com/qascade) |[ridvansumset](https://github.com/ridvansumset) |[rliebz](https://github.com/rliebz) |
-
-[<img alt="rdeusser" src="https://avatars.githubusercontent.com/u/5935071?v=4&s=117" width="117">](https://github.com/rdeusser) |[<img alt="rmarku" src="https://avatars.githubusercontent.com/u/1113370?v=4&s=117" width="117">](https://github.com/rmarku) |[<img alt="rnikoopour" src="https://avatars.githubusercontent.com/u/7692789?v=4&s=117" width="117">](https://github.com/rnikoopour) |[<img alt="rafamadriz" src="https://avatars.githubusercontent.com/u/67771985?v=4&s=117" width="117">](https://github.com/rafamadriz) |[<img alt="paco0x" src="https://avatars.githubusercontent.com/u/6123425?v=4&s=117" width="117">](https://github.com/paco0x) |[<img alt="pa-m" src="https://avatars.githubusercontent.com/u/5503106?v=4&s=117" width="117">](https://github.com/pa-m) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[rdeusser](https://github.com/rdeusser) |[rmarku](https://github.com/rmarku) |[rnikoopour](https://github.com/rnikoopour) |[rafamadriz](https://github.com/rafamadriz) |[paco0x](https://github.com/paco0x) |[pa-m](https://github.com/pa-m) |
-
-[<img alt="cinar" src="https://avatars.githubusercontent.com/u/1754092?v=4&s=117" width="117">](https://github.com/cinar) |[<img alt="natefinch" src="https://avatars.githubusercontent.com/u/3185864?v=4&s=117" width="117">](https://github.com/natefinch) |[<img alt="nunnatsa" src="https://avatars.githubusercontent.com/u/60659093?v=4&s=117" width="117">](https://github.com/nunnatsa) |[<img alt="michalhisim" src="https://avatars.githubusercontent.com/u/764249?v=4&s=117" width="117">](https://github.com/michalhisim) |[<img alt="zeripath" src="https://avatars.githubusercontent.com/u/1824502?v=4&s=117" width="117">](https://github.com/zeripath) |[<img alt="y-yagi" src="https://avatars.githubusercontent.com/u/987638?v=4&s=117" width="117">](https://github.com/y-yagi) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[cinar](https://github.com/cinar) |[natefinch](https://github.com/natefinch) |[nunnatsa](https://github.com/nunnatsa) |[michalhisim](https://github.com/michalhisim) |[zeripath](https://github.com/zeripath) |[y-yagi](https://github.com/y-yagi) |
-
-[<img alt="techknowlogick" src="https://avatars.githubusercontent.com/u/164197?v=4&s=117" width="117">](https://github.com/techknowlogick) |[<img alt="okhowang" src="https://avatars.githubusercontent.com/u/3352585?v=4&s=117" width="117">](https://github.com/okhowang) |[<img alt="meanguy" src="https://avatars.githubusercontent.com/u/78570571?v=4&s=117" width="117">](https://github.com/meanguy) |[<img alt="likyh" src="https://avatars.githubusercontent.com/u/3294100?v=4&s=117" width="117">](https://github.com/likyh) |[<img alt="kerneltravel" src="https://avatars.githubusercontent.com/u/437879?v=4&s=117" width="117">](https://github.com/kerneltravel) |[<img alt="jmckenzieark" src="https://avatars.githubusercontent.com/u/70923399?v=4&s=117" width="117">](https://github.com/jmckenzieark) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[techknowlogick](https://github.com/techknowlogick) |[okhowang](https://github.com/okhowang) |[meanguy](https://github.com/meanguy) |[likyh](https://github.com/likyh) |[kerneltravel](https://github.com/kerneltravel) |[jmckenzieark](https://github.com/jmckenzieark) |
-
-[<img alt="haya14busa" src="https://avatars.githubusercontent.com/u/3797062?v=4&s=117" width="117">](https://github.com/haya14busa) |[<img alt="fregin" src="https://avatars.githubusercontent.com/u/23256240?v=4&s=117" width="117">](https://github.com/fregin) |[<img alt="ydah" src="https://avatars.githubusercontent.com/u/13041216?v=4&s=117" width="117">](https://github.com/ydah) |[<img alt="WillAbides" src="https://avatars.githubusercontent.com/u/233500?v=4&s=117" width="117">](https://github.com/WillAbides) |[<img alt="heyvito" src="https://avatars.githubusercontent.com/u/77198?v=4&s=117" width="117">](https://github.com/heyvito) |[<img alt="VincentBaron" src="https://avatars.githubusercontent.com/u/58427099?v=4&s=117" width="117">](https://github.com/VincentBaron) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[haya14busa](https://github.com/haya14busa) |[fregin](https://github.com/fregin) |[ydah](https://github.com/ydah) |[WillAbides](https://github.com/WillAbides) |[heyvito](https://github.com/heyvito) |[VincentBaron](https://github.com/VincentBaron) |
-
-[<img alt="scop" src="https://avatars.githubusercontent.com/u/109152?v=4&s=117" width="117">](https://github.com/scop) |[<img alt="vkrol" src="https://avatars.githubusercontent.com/u/153412?v=4&s=117" width="117">](https://github.com/vkrol) |[<img alt="KirillSluchaev" src="https://avatars.githubusercontent.com/u/58340009?v=4&s=117" width="117">](https://github.com/KirillSluchaev) |[<img alt="Jarema" src="https://avatars.githubusercontent.com/u/7369771?v=4&s=117" width="117">](https://github.com/Jarema) |[<img alt="tartale" src="https://avatars.githubusercontent.com/u/9323250?v=4&s=117" width="117">](https://github.com/tartale) |[<img alt="tmzane" src="https://avatars.githubusercontent.com/u/73077675?v=4&s=117" width="117">](https://github.com/tmzane) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[scop](https://github.com/scop) |[vkrol](https://github.com/vkrol) |[KirillSluchaev](https://github.com/KirillSluchaev) |[Jarema](https://github.com/Jarema) |[tartale](https://github.com/tartale) |[tmzane](https://github.com/tmzane) |
-
-[<img alt="felipedavid" src="https://avatars.githubusercontent.com/u/75049173?v=4&s=117" width="117">](https://github.com/felipedavid) |[<img alt="euank" src="https://avatars.githubusercontent.com/u/2147649?v=4&s=117" width="117">](https://github.com/euank) |[<img alt="Entuazism" src="https://avatars.githubusercontent.com/u/56657856?v=4&s=117" width="117">](https://github.com/Entuazism) |[<img alt="Juneezee" src="https://avatars.githubusercontent.com/u/20135478?v=4&s=117" width="117">](https://github.com/Juneezee) |[<img alt="echoix" src="https://avatars.githubusercontent.com/u/27212526?v=4&s=117" width="117">](https://github.com/echoix) |[<img alt="EXHades" src="https://avatars.githubusercontent.com/u/22260242?v=4&s=117" width="117">](https://github.com/EXHades) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[felipedavid](https://github.com/felipedavid) |[euank](https://github.com/euank) |[Entuazism](https://github.com/Entuazism) |[Juneezee](https://github.com/Juneezee) |[echoix](https://github.com/echoix) |[EXHades](https://github.com/EXHades) |
-
-[<img alt="petethepig" src="https://avatars.githubusercontent.com/u/662636?v=4&s=117" width="117">](https://github.com/petethepig) |[<img alt="Dirk007" src="https://avatars.githubusercontent.com/u/17194484?v=4&s=117" width="117">](https://github.com/Dirk007) |[<img alt="yangdiangzb" src="https://avatars.githubusercontent.com/u/16643665?v=4&s=117" width="117">](https://github.com/yangdiangzb) |[<img alt="derekperkins" src="https://avatars.githubusercontent.com/u/3588778?v=4&s=117" width="117">](https://github.com/derekperkins) |[<img alt="bboreham" src="https://avatars.githubusercontent.com/u/8125524?v=4&s=117" width="117">](https://github.com/bboreham) |[<img alt="attiss" src="https://avatars.githubusercontent.com/u/23562566?v=4&s=117" width="117">](https://github.com/attiss) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[petethepig](https://github.com/petethepig) |[Dirk007](https://github.com/Dirk007) |[yangdiangzb](https://github.com/yangdiangzb) |[derekperkins](https://github.com/derekperkins) |[bboreham](https://github.com/bboreham) |[attiss](https://github.com/attiss) |
-
-[<img alt="hatamiarash7" src="https://avatars.githubusercontent.com/u/16325641?v=4&s=117" width="117">](https://github.com/hatamiarash7) |[<img alt="Aragur" src="https://avatars.githubusercontent.com/u/11004008?v=4&s=117" width="117">](https://github.com/Aragur) |[<img alt="amincheloh" src="https://avatars.githubusercontent.com/u/1217397?v=4&s=117" width="117">](https://github.com/amincheloh) |[<img alt="kulti" src="https://avatars.githubusercontent.com/u/1286683?v=4&s=117" width="117">](https://github.com/kulti) |[<img alt="Abirdcfly" src="https://avatars.githubusercontent.com/u/5100555?v=4&s=117" width="117">](https://github.com/Abirdcfly) |[<img alt="abhinav" src="https://avatars.githubusercontent.com/u/41730?v=4&s=117" width="117">](https://github.com/abhinav) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[hatamiarash7](https://github.com/hatamiarash7) |[Aragur](https://github.com/Aragur) |[amincheloh](https://github.com/amincheloh) |[kulti](https://github.com/kulti) |[Abirdcfly](https://github.com/Abirdcfly) |[abhinav](https://github.com/abhinav) |
-
-[<img alt="r-ricci" src="https://avatars.githubusercontent.com/u/52817765?v=4&s=117" width="117">](https://github.com/r-ricci) |[<img alt="mmcloughlin" src="https://avatars.githubusercontent.com/u/7133685?v=4&s=117" width="117">](https://github.com/mmcloughlin) |[<img alt="mathieu-aubin" src="https://avatars.githubusercontent.com/u/15820228?v=4&s=117" width="117">](https://github.com/mathieu-aubin) |[<img alt="martinsirbe" src="https://avatars.githubusercontent.com/u/13367583?v=4&s=117" width="117">](https://github.com/martinsirbe) |[<img alt="avorima" src="https://avatars.githubusercontent.com/u/15158349?v=4&s=117" width="117">](https://github.com/avorima) |[<img alt="moukoublen" src="https://avatars.githubusercontent.com/u/1380039?v=4&s=117" width="117">](https://github.com/moukoublen) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[r-ricci](https://github.com/r-ricci) |[mmcloughlin](https://github.com/mmcloughlin) |[mathieu-aubin](https://github.com/mathieu-aubin) |[martinsirbe](https://github.com/martinsirbe) |[avorima](https://github.com/avorima) |[moukoublen](https://github.com/moukoublen) |
-
-[<img alt="very-amused" src="https://avatars.githubusercontent.com/u/44382255?v=4&s=117" width="117">](https://github.com/very-amused) |[<img alt="johnrichardrinehart" src="https://avatars.githubusercontent.com/u/6321578?v=4&s=117" width="117">](https://github.com/johnrichardrinehart) |[<img alt="walles" src="https://avatars.githubusercontent.com/u/158201?v=4&s=117" width="117">](https://github.com/walles) |[<img alt="jefersonf" src="https://avatars.githubusercontent.com/u/3049540?v=4&s=117" width="117">](https://github.com/jefersonf) |[<img alt="jamesmaidment" src="https://avatars.githubusercontent.com/u/2050324?v=4&s=117" width="117">](https://github.com/jamesmaidment) |[<img alt="jalaziz" src="https://avatars.githubusercontent.com/u/247849?v=4&s=117" width="117">](https://github.com/jalaziz) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[very-amused](https://github.com/very-amused) |[johnrichardrinehart](https://github.com/johnrichardrinehart) |[walles](https://github.com/walles) |[jefersonf](https://github.com/jefersonf) |[jamesmaidment](https://github.com/jamesmaidment) |[jalaziz](https://github.com/jalaziz) |
-
-[<img alt="grongor" src="https://avatars.githubusercontent.com/u/972493?v=4&s=117" width="117">](https://github.com/grongor) |[<img alt="tie" src="https://avatars.githubusercontent.com/u/14792994?v=4&s=117" width="117">](https://github.com/tie) |[<img alt="quasilyte" src="https://avatars.githubusercontent.com/u/6286655?v=4&s=117" width="117">](https://github.com/quasilyte) |[<img alt="davidhsingyuchen" src="https://avatars.githubusercontent.com/u/17587061?v=4&s=117" width="117">](https://github.com/davidhsingyuchen) |[<img alt="gfariasalves-ionos" src="https://avatars.githubusercontent.com/u/112630064?v=4&s=117" width="117">](https://github.com/gfariasalves-ionos) |[<img alt="gburanov" src="https://avatars.githubusercontent.com/u/2969603?v=4&s=117" width="117">](https://github.com/gburanov) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[grongor](https://github.com/grongor) |[tie](https://github.com/tie) |[quasilyte](https://github.com/quasilyte) |[davidhsingyuchen](https://github.com/davidhsingyuchen) |[gfariasalves-ionos](https://github.com/gfariasalves-ionos) |[gburanov](https://github.com/gburanov) |
-
-[<img alt="ginglis13" src="https://avatars.githubusercontent.com/u/43075615?v=4&s=117" width="117">](https://github.com/ginglis13) |[<img alt="flesser" src="https://avatars.githubusercontent.com/u/510681?v=4&s=117" width="117">](https://github.com/flesser) |
-:---: |:---: |
-[ginglis13](https://github.com/ginglis13) |[flesser](https://github.com/flesser) |
+<a href="https://github.com/mgechev/revive/graphs/contributors">
+  <img alt="All Contributors" src="https://contrib.rocks/image?repo=mgechev/revive&max=500" />
+</a>
 
 ## License
 

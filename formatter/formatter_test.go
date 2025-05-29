@@ -50,7 +50,7 @@ func TestFormatter(t *testing.T) {
 		{
 			formatter: &formatter.Friendly{},
 			want: `
-⚠  https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#rule  test failure  
+⚠  https://revive.run/r#rule  test failure  
   test.go:2:5
 
 ⚠ 1 problem (0 errors, 1 warning)
@@ -61,15 +61,17 @@ Warnings:
 		},
 		{
 			formatter: &formatter.JSON{},
-			want:      `[{"Severity":"warning","Failure":"test failure","RuleName":"rule","Category":"cat","Position":{"Start":{"Filename":"test.go","Offset":0,"Line":2,"Column":5},"End":{"Filename":"test.go","Offset":0,"Line":2,"Column":10}},"Confidence":0,"ReplacementLine":""}]`,
+			//revive:disable-next-line // line-length-limit
+			want: `[{"Severity":"warning","Failure":"test failure","RuleName":"rule","Category":"cat","Position":{"Start":{"Filename":"test.go","Offset":0,"Line":2,"Column":5},"End":{"Filename":"test.go","Offset":0,"Line":2,"Column":10}},"Confidence":0,"ReplacementLine":""}]`, //nolint:revive // line-length-limit
 		},
 		{
 			formatter: &formatter.NDJSON{},
-			want:      `{"Severity":"warning","Failure":"test failure","RuleName":"rule","Category":"cat","Position":{"Start":{"Filename":"test.go","Offset":0,"Line":2,"Column":5},"End":{"Filename":"test.go","Offset":0,"Line":2,"Column":10}},"Confidence":0,"ReplacementLine":""}`,
+			//revive:disable-next-line // line-length-limit
+			want: `{"Severity":"warning","Failure":"test failure","RuleName":"rule","Category":"cat","Position":{"Start":{"Filename":"test.go","Offset":0,"Line":2,"Column":5},"End":{"Filename":"test.go","Offset":0,"Line":2,"Column":10}},"Confidence":0,"ReplacementLine":""}`, //nolint:revive // line-length-limit
 		},
 		{
 			formatter: &formatter.Plain{},
-			want:      `test.go:2:5: test failure https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#rule`,
+			want:      `test.go:2:5: test failure https://revive.run/r#rule`,
 		},
 		{
 			formatter: &formatter.Sarif{},
@@ -100,7 +102,7 @@ Warnings:
       ],
       "tool": {
         "driver": {
-          "informationUri": "https://github.com/mgechev/revive",
+          "informationUri": "https://revive.run",
           "name": "revive"
         }
       }
@@ -114,10 +116,10 @@ Warnings:
 			formatter: &formatter.Stylish{},
 			want: `
 test.go
-  (2, 5)  https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#rule  test failure  
+  (2, 5)  https://revive.run/r#rule  test failure  
 
 
- ✖ 1 problem (0 errors) (1 warnings)
+ ✖ 1 problem (0 errors) (1 warning)
 `,
 		},
 		{

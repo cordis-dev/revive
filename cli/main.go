@@ -27,24 +27,24 @@ var (
 	commit  = defaultCommit
 	date    = defaultDate
 	builtBy = defaultBuilder
-	// AppFs is used to operations related with user config files
+	// AppFs is used for operations related to user config files.
 	AppFs = afero.NewOsFs()
 )
 
 func fail(err string) {
 	fmt.Fprintln(os.Stderr, err)
-	os.Exit(1)
+	os.Exit(1) //revive:disable-line:deep-exit
 }
 
 // RunRevive runs the CLI for revive.
 func RunRevive(extraRules ...revivelib.ExtraRule) {
-	// move parsing flags outside of init() otherwise tests don't works properly
-	// more info: https://github.com/golang/go/issues/46869#issuecomment-865695953
+	// Move parsing flags outside of init(); otherwise, tests don't work properly.
+	// More info: https://github.com/golang/go/issues/46869#issuecomment-865695953
 	initConfig()
 
 	if versionFlag {
 		fmt.Print(getVersion(builtBy, date, commit, version))
-		os.Exit(0)
+		return
 	}
 
 	conf, err := config.GetConfig(configPath)
@@ -87,7 +87,7 @@ func RunRevive(extraRules ...revivelib.ExtraRule) {
 		fmt.Println(output)
 	}
 
-	os.Exit(exitCode)
+	os.Exit(exitCode) //revive:disable-line:deep-exit
 }
 
 var (
@@ -101,24 +101,24 @@ var (
 
 var originalUsage = flag.Usage
 
-func getLogo() string {
+func logo() string {
 	return color.YellowString(` _ __ _____   _(_)__  _____
 | '__/ _ \ \ / / \ \ / / _ \
 | | |  __/\ V /| |\ V /  __/
 |_|  \___| \_/ |_| \_/ \___|`)
 }
 
-func getCall() string {
+func call() string {
 	return color.MagentaString("revive -config c.toml -formatter friendly -exclude a.go -exclude b.go ./...")
 }
 
-func getBanner() string {
+func banner() string {
 	return fmt.Sprintf(`
 %s
 
 Example:
   %s
-`, getLogo(), getCall())
+`, logo(), call())
 }
 
 func buildDefaultConfigPath() string {
@@ -150,7 +150,7 @@ func initConfig() {
 	}
 
 	flag.Usage = func() {
-		fmt.Println(getBanner())
+		fmt.Println(banner())
 		originalUsage()
 	}
 
@@ -175,7 +175,7 @@ func initConfig() {
 	flag.Parse()
 }
 
-// getVersion returns build info (version, commit, date and builtBy)
+// getVersion returns build info (version, commit, date, and builtBy).
 func getVersion(builtBy, date, commit, version string) string {
 	var buildInfo string
 	if date != defaultDate && builtBy != defaultBuilder {
@@ -190,7 +190,7 @@ func getVersion(builtBy, date, commit, version string) string {
 		bi, ok := debug.ReadBuildInfo()
 		if ok {
 			version = strings.TrimPrefix(bi.Main.Version, "v")
-			if len(buildInfo) == 0 {
+			if buildInfo == "" {
 				return fmt.Sprintf("version %s\n", version)
 			}
 		}
