@@ -11,6 +11,24 @@ func TestVarNaming(t *testing.T) {
 	testRule(t, "var_naming", &rule.VarNamingRule{}, &lint.RuleConfig{
 		Arguments: []any{[]any{"ID"}, []any{"VM"}},
 	})
+	testRule(t, "var_naming_skip_initialism_name_checks_true", &rule.VarNamingRule{}, &lint.RuleConfig{
+		Arguments: []any{
+			[]any{},
+			[]any{},
+			[]any{map[string]any{"skip-initialism-name-checks": true}},
+		}})
+	testRule(t, "var_naming_skip_initialism_name_checks_false", &rule.VarNamingRule{}, &lint.RuleConfig{
+		Arguments: []any{
+			[]any{},
+			[]any{},
+			[]any{map[string]any{"skip-initialism-name-checks": false}},
+		}})
+	testRule(t, "var_naming_allowlist_blocklist_skip_initialism_name_checks", &rule.VarNamingRule{}, &lint.RuleConfig{
+		Arguments: []any{
+			[]any{"ID"},
+			[]any{"VM"},
+			[]any{map[string]any{"skip-initialism-name-checks": true}},
+		}})
 
 	testRule(t, "var_naming_test", &rule.VarNamingRule{}, &lint.RuleConfig{})
 
@@ -37,7 +55,7 @@ func TestVarNaming(t *testing.T) {
 	})
 	testRule(t, "var_naming_bad_package_name", &rule.VarNamingRule{}, &lint.RuleConfig{
 		Arguments: []any{[]any{}, []any{},
-			[]any{map[string]any{"skip-package-name-checks": false, "extra-bad-package-names": []string{"helpers"}}},
+			[]any{map[string]any{"skip-package-name-checks": false, "extra-bad-package-names": []any{"helpers"}}},
 		},
 	})
 }

@@ -31,6 +31,7 @@ List of all available rules.
   - [enforce-map-style](#enforce-map-style)
   - [enforce-repeated-arg-type-style](#enforce-repeated-arg-type-style)
   - [enforce-slice-style](#enforce-slice-style)
+  - [enforce-switch-style](#enforce-switch-style)
   - [error-naming](#error-naming)
   - [error-return](#error-return)
   - [error-strings](#error-strings)
@@ -519,6 +520,40 @@ Example:
 [rule.enforce-slice-style]
 arguments = ["make"]
 ```
+
+## enforce-switch-style
+
+_Description_: This rule enforces consistent usage of `default` on `switch` statements.
+It can check for `default` case clause occurrence and/or position in the list of case clauses.
+
+_Configuration_: ([]string) Specifies what to enforced: occurrence and/or position. The, non-mutually exclusive, options are:
+
+- "allowNoDefault": allows `switch` without `default` case clause.
+- "allowDefaultNotLast": allows `default` case clause to be not the last clause of the `switch`.
+
+Examples:
+
+To enforce that all `switch` statements have a `default` clause as its the last case clause:
+
+```toml
+[rule.enforce-switch-style]
+```
+
+To enforce that all `switch` statements have a `default` clause but its position is unimportant:
+
+```toml
+[rule.enforce-switch-style]
+arguments = ["allowDefaultNotLast"]
+```
+
+To enforce that in all `switch` statements with a `default` clause, the `default` is the last case clause:
+
+```toml
+[rule.enforce-switch-style]
+arguments = ["allowNoDefault"]
+```
+
+Notice that a configuration including both options will effectively deactivate the whole rule.
 
 ## error-naming
 
@@ -1203,11 +1238,11 @@ Example:
 ```toml
 [rule.unhandled-error]
 arguments = [
-  'os\.(Create|WriteFile|Chmod)',
-  'fmt\.Print',
+  '^os\.(CreateTemp|WriteFile|Chmod)$',
+  '^fmt\.Print',
   'myFunction',
-  'net\..*',
-  'bytes\.Buffer\.Write',
+  '^net\.',
+  '^(bytes\.Buffer|string\.Writer)\.Write(Byte|Rune|String)?$',
 ]
 ```
 
@@ -1328,6 +1363,9 @@ It ignores functions starting with `Example`, `Test`, `Benchmark`, and `Fuzz` in
 _Configuration_: This rule accepts two slices of strings and one optional slice containing a single map with named parameters.
 (This is because TOML does not support "slice of any," and we maintain backward compatibility with the previous configuration version).
 The first slice is an allowlist, and the second one is a blocklist of initialisms.
+You can add a boolean parameter `skipInitialismNameChecks` (`skipinitialismnamechecks` or `skip-initialism-name-checks`) to control how names
+of functions, variables, consts, and structs handle known initialisms (e.g., JSON, HTTP, etc.) when written in `camelCase`.
+When `skipInitialismNameChecks` is set to true, the rule allows names like `readJson`, `HttpMethod` etc.
 In the map, you can add a boolean `upperCaseConst` (`uppercaseconst`, `upper-case-const`) parameter to allow `UPPER_CASE` for `const`.
 You can also add a boolean `skipPackageNameChecks` (`skippackagenamechecks`, `skip-package-name-checks`) to skip package name checks.
 When `skipPackageNameChecks` is false (the default), you can configure `extraBadPackageNames` (`extrabadpackagenames`, `extra-bad-package-names`)
@@ -1337,6 +1375,11 @@ to forbid using the values from the list as package names additionally to the st
 By default, the rule behaves exactly as the alternative in `golint` but optionally, you can relax it (see [golint/lint/issues/89](https://github.com/golang/lint/issues/89)).
 
 Examples:
+
+```toml
+[rule.var-naming]
+arguments = [[], [], [{ skipInitialismNameChecks = true }]]
+```
 
 ```toml
 [rule.var-naming]
@@ -1351,6 +1394,11 @@ arguments = [[], [], [{ skipPackageNameChecks = true }]]
 ```toml
 [rule.var-naming]
 arguments = [[], [], [{ extraBadPackageNames = ["helpers", "models"] }]]
+```
+
+```toml
+[rule.var-naming]
+arguments = [[], [], [{ skip-initialism-name-checks = true }]]
 ```
 
 ```toml
