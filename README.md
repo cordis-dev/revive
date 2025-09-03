@@ -2,6 +2,7 @@
 
 [![Build Status](https://github.com/mgechev/revive/actions/workflows/test.yaml/badge.svg)](https://github.com/mgechev/revive/actions/workflows/test.yaml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/mgechev/revive.svg)](https://pkg.go.dev/github.com/mgechev/revive)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/mgechev/revive)
 
 Fast, configurable, extensible, flexible, and beautiful linter for Go. Drop-in replacement of golint.
 **`Revive` provides a framework for development of custom rules,
@@ -31,57 +32,56 @@ If you disable them in the config file, revive will run over 6x faster than goli
   <img src="./assets/demo.svg" alt="" width="700">
 </p>
 
-<!-- TOC -->
+<!-- toc -->
 
-- [revive](#revive)
-  - [Installation](#installation)
-    - [Homebrew](#homebrew)
-    - [Install from Sources](#install-from-sources)
-    - [Docker](#docker)
-    - [Manual Binary Download](#manual-binary-download)
-  - [Usage](#usage)
-    - [Bazel](#bazel)
-    - [Text Editors](#text-editors)
-    - [GitHub Actions](#github-actions)
-    - [Continuous Integration](#continuous-integration)
-    - [Linter aggregators](#linter-aggregators)
-      - [golangci-lint](#golangci-lint)
-    - [Command Line Flags](#command-line-flags)
-    - [Sample Invocations](#sample-invocations)
-    - [Comment Directives](#comment-directives)
-    - [Configuration](#configuration)
-    - [Default Configuration](#default-configuration)
-    - [Custom Configuration](#custom-configuration)
-    - [Recommended Configuration](#recommended-configuration)
-    - [Rule-level file excludes](#rule-level-file-excludes)
-  - [Available Rules](#available-rules)
-  - [Configurable rules](#configurable-rules)
-    - [`var-naming`](#var-naming)
-  - [Available Formatters](#available-formatters)
-    - [Friendly](#friendly)
-    - [Stylish](#stylish)
-    - [Default](#default)
-    - [Plain](#plain)
-    - [Unix](#unix)
-    - [JSON](#json)
-    - [NDJSON](#ndjson)
-    - [Checkstyle](#checkstyle)
-    - [SARIF](#sarif)
-  - [Extensibility](#extensibility)
-    - [Writing a Custom Rule](#writing-a-custom-rule)
-      - [Using `revive` as a library](#using-revive-as-a-library)
-    - [Custom Formatter](#custom-formatter)
-  - [Speed Comparison](#speed-comparison)
-    - [golint](#golint)
-    - [revive's speed](#revives-speed)
-  - [Overriding colorization detection](#overriding-colorization-detection)
-  - [Who uses Revive](#who-uses-revive)
-  - [Contributors](#contributors)
-    - [Maintainers](#maintainers)
-    - [All](#all)
-  - [License](#license)
+- [Installation](#installation)
+  - [Homebrew](#homebrew)
+  - [Install from Sources](#install-from-sources)
+  - [Docker](#docker)
+  - [Manual Binary Download](#manual-binary-download)
+- [Usage](#usage)
+  - [Bazel](#bazel)
+  - [Text Editors](#text-editors)
+  - [GitHub Actions](#github-actions)
+  - [Continuous Integration](#continuous-integration)
+  - [Linter aggregators](#linter-aggregators)
+    - [golangci-lint](#golangci-lint)
+  - [Command Line Flags](#command-line-flags)
+  - [Sample Invocations](#sample-invocations)
+  - [Comment Directives](#comment-directives)
+  - [Configuration](#configuration)
+  - [Default Configuration](#default-configuration)
+  - [Custom Configuration](#custom-configuration)
+  - [Recommended Configuration](#recommended-configuration)
+  - [Rule-level file excludes](#rule-level-file-excludes)
+- [Available Rules](#available-rules)
+- [Configurable rules](#configurable-rules)
+  - [`var-naming`](#var-naming)
+- [Available Formatters](#available-formatters)
+  - [Friendly](#friendly)
+  - [Stylish](#stylish)
+  - [Default](#default)
+  - [Plain](#plain)
+  - [Unix](#unix)
+  - [JSON](#json)
+  - [NDJSON](#ndjson)
+  - [Checkstyle](#checkstyle)
+  - [SARIF](#sarif)
+- [Extensibility](#extensibility)
+  - [Writing a Custom Rule](#writing-a-custom-rule)
+    - [Using `revive` as a library](#using-revive-as-a-library)
+  - [Custom Formatter](#custom-formatter)
+- [Speed Comparison](#speed-comparison)
+  - [golint](#golint)
+  - [revive's speed](#revives-speed)
+- [Overriding colorization detection](#overriding-colorization-detection)
+- [Who uses Revive](#who-uses-revive)
+- [Contributors](#contributors)
+  - [Maintainers](#maintainers)
+  - [All](#all)
+- [License](#license)
 
-<!-- /TOC -->
+<!-- tocstop -->
 
 ## Installation
 
@@ -550,12 +550,17 @@ List of all available rules. The rules ported from `golint` are left unchanged a
 | [`function-result-limit`](./RULES_DESCRIPTIONS.md#function-result-limit) |  int (defaults to 3)| Specifies the maximum number of results a function can return    |    no    |  no   |
 | [`get-return`](./RULES_DESCRIPTIONS.md#get-return)          |  n/a   | Warns on getters that do not yield any result                    |    no    |  no   |
 | [`identical-branches`](./RULES_DESCRIPTIONS.md#identical-branches)          |  n/a   | Spots if-then-else statements with identical `then` and `else` branches       |    no    |  no   |
+| [`identical-ifelseif-branches`](./RULES_DESCRIPTIONS.md#identical-ifelseif-branches)          |  n/a   | Spots `if ... else if` chains with identical branches.       |    no    |  no   |
+| [`identical-ifelseif-conditions`](./RULES_DESCRIPTIONS.md#identical-ifelseif-conditions)          |  n/a   | Spots identical conditions in  `if ... else if` chains.       |    no    |  no   |
+| [`identical-switch-branches`](./RULES_DESCRIPTIONS.md#identical-switch-branches)          |  n/a   | Spots `switch` with identical branches.       |    no    |  no   |
+| [`identical-switch-conditions`](./RULES_DESCRIPTIONS.md#identical-switch-conditions)          |  n/a   | Spots identical conditions in case clauses of `switch` statements.       |    no    |  no   |
 | [`if-return`](./RULES_DESCRIPTIONS.md#if-return)           |  n/a   | Redundant if when returning an error.                            |   no    |  no   |
 | [`import-alias-naming`](./RULES_DESCRIPTIONS.md#import-alias-naming)         | string or map[string]string (defaults to allow regex pattern `^[a-z][a-z0-9]{0,}$`) | Conventions around the naming of import aliases.                              |    no    |  no   |
 | [`import-shadowing`](./RULES_DESCRIPTIONS.md#import-shadowing)   | n/a    | Spots identifiers that shadow an import    |    no    |  no   |
 | [`imports-blocklist`](./RULES_DESCRIPTIONS.md#imports-blocklist)   | []string | Disallows importing the specified packages                     |    no    |  no   |
 | [`increment-decrement`](./RULES_DESCRIPTIONS.md#increment-decrement) |  n/a   | Use `i++` and `i--` instead of `i += 1` and `i -= 1`.            |   yes    |  no   |
 | [`indent-error-flow`](./RULES_DESCRIPTIONS.md#indent-error-flow)   |  []string   | Prevents redundant else statements.                              |   yes    |  no   |
+| [`inefficient-map-lookup`](./RULES_DESCRIPTIONS.md#inefficient-map-lookup)   |  n/a  | Spots iterative searches for a key in a map           |   no    |  yes   |
 | [`line-length-limit`](./RULES_DESCRIPTIONS.md#line-length-limit)   | int (defaults to 80) | Specifies the maximum number of characters in a line             |    no    |  no   |
 | [`max-control-nesting`](./RULES_DESCRIPTIONS.md#max-control-nesting) |  int (defaults to 5)  | Sets restriction for maximum nesting of control structures. |    no    |  no   |
 | [`max-public-structs`](./RULES_DESCRIPTIONS.md#max-public-structs)  |  int (defaults to 5)  | The maximum number of public structs in a file.                  |    no    |  no   |
@@ -564,6 +569,7 @@ List of all available rules. The rules ported from `golint` are left unchanged a
 | [`nested-structs`](./RULES_DESCRIPTIONS.md#nested-structs)          |  n/a   |  Warns on structs within structs |    no    |  no   |
 | [`optimize-operands-order`](./RULES_DESCRIPTIONS.md#optimize-operands-order)          |  n/a   |  Checks inefficient conditional expressions |    no    |  no   |
 | [`package-comments`](./RULES_DESCRIPTIONS.md#package-comments)    |  n/a   | Package commenting conventions.                                  |   yes    |  no   |
+| [`package-directory-mismatch`](./RULES_DESCRIPTIONS.md#package-directory-mismatch)    | string | Checks that package name matches containing directory name     |   no    |  no   |
 | [`range-val-address`](./RULES_DESCRIPTIONS.md#range-val-address)|  n/a   | Warns if address of range value is used dangerously |    no    |  yes   |
 | [`range-val-in-closure`](./RULES_DESCRIPTIONS.md#range-val-in-closure)|  n/a   | Warns if range value is used in a closure dispatched as goroutine|    no    |  no   |
 | [`range`](./RULES_DESCRIPTIONS.md#range)               |  n/a   | Prevents redundant variables when iterating over a collection.   |   yes    |  no   |
@@ -587,12 +593,15 @@ List of all available rules. The rules ported from `golint` are left unchanged a
 | [`unnecessary-format`](./RULES_DESCRIPTIONS.md#unnecessary-format)    |  n/a   | Identifies calls to formatting functions where the format string does not contain any formatting verbs          |    no    |  no   |
 | [`unnecessary-stmt`](./RULES_DESCRIPTIONS.md#unnecessary-stmt)    |  n/a   | Suggests removing or simplifying unnecessary statements          |    no    |  no   |
 | [`unreachable-code`](./RULES_DESCRIPTIONS.md#unreachable-code)    |  n/a   | Warns on unreachable code                                        |    no    |  no   |
+| [`unsecure-url-scheme`](./RULES_DESCRIPTIONS.md#unsecure-url-scheme)          |  n/a   |  Checks for usage of potentially unsecure URL schemes. |    no    |  no   |
 | [`unused-parameter`](./RULES_DESCRIPTIONS.md#unused-parameter)    |  n/a   | Suggests to rename or remove unused function parameters          |    no    |  no   |
 | [`unused-receiver`](./RULES_DESCRIPTIONS.md#unused-receiver)   | n/a    | Suggests to rename or remove unused method receivers    |    no    |  no   |
 | [`use-any`](./RULES_DESCRIPTIONS.md#use-any)          |  n/a   |  Proposes to replace `interface{}` with its alias `any` |    no    |  no   |
 | [`use-errors-new`](./RULES_DESCRIPTIONS.md#use-errors-new) | n/a   | Spots calls to `fmt.Errorf` that can be replaced by `errors.New` |   no    |  no   |
 | [`use-fmt-print`](./RULES_DESCRIPTIONS.md#use-fmt-print) | n/a   | Proposes to replace calls to built-in `print` and `println` with their equivalents from `fmt`. |   no    |  no   |
+| [`use-waitgroup-go`](./RULES_DESCRIPTIONS.md#use-waitgroup-go)          |  n/a   |  Proposes to replace `wg.Add ... go {... wg.Done ...}` idiom with `wg.Go` |    no    |  no   |
 | [`useless-break`](./RULES_DESCRIPTIONS.md#useless-break)          |  n/a   |  Warns on useless `break` statements in case clauses |    no    |  no   |
+| [`useless-fallthrough`](./RULES_DESCRIPTIONS.md#useless-fallthrough)  |  n/a   |  Warns on useless `fallthrough` statements in case clauses |    no    |  no   |
 | [`var-declaration`](./RULES_DESCRIPTIONS.md#var-declaration)     |  n/a   | Reduces redundancies around variable declaration.                |   yes    |  yes  |
 | [`var-naming`](./RULES_DESCRIPTIONS.md#var-naming)          |  allowlist & blocklist of initialisms   | Naming rules.                                                    |   yes    |  no   |
 | [`waitgroup-by-value`](./RULES_DESCRIPTIONS.md#waitgroup-by-value)  |  n/a   | Warns on functions taking sync.WaitGroup as a by-value parameter |    no    |  no   |

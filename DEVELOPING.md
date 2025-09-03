@@ -31,6 +31,10 @@ DEBUG=1 go run main.go
 
 This will output debug information to `stderr` and to the log file `revive.log` created in the current working directory.
 
+## Coding standards
+
+Follow [the instructions](.github/instructions/) which contain Go coding standards and conventions used by both humans and GitHub Copilot.
+
 ## Development of rules
 
 If you want to develop a new rule, follow as an example the already existing rules in the [rule package](https://github.com/mgechev/revive/tree/master/rule).
@@ -89,15 +93,20 @@ type Formatter interface {
 
 ### Lint Markdown files
 
-We use [markdownlint](https://github.com/DavidAnson/markdownlint) and [mdsf](https://github.com/hougesen/mdsf) to check Markdown files.
-`markdownlint` verifies document formatting, such as line length and empty lines, while `mdsf` is responsible for formatting code snippets.
+We use [markdownlint](https://github.com/DavidAnson/markdownlint),
+[markdown-toc](https://github.com/jonschlinkert/markdown-toc),
+and [mdsf](https://github.com/hougesen/mdsf) to check Markdown files.
+`markdownlint` verifies document formatting, such as line length and empty lines.
+`markdown-toc` checks the entries in the table of contents.
+`mdsf` is responsible for formatting code snippets.
 
 1. Install [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2#install).
-2. Install [mdsf](https://mdsf.mhouge.dk/#installation) and formatters:
+2. Install [markdown-toc](https://github.com/jonschlinkert/markdown-toc#quick-start).
+3. Install [mdsf](https://mdsf.mhouge.dk/#installation) and formatters:
     - [goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports) for `go`: `go install golang.org/x/tools/cmd/goimports@latest`
     - [shfmt](https://github.com/mvdan/sh#shfmt) for `sh, shell, bash`: `go install mvdan.cc/sh/v3/cmd/shfmt@latest`
     - [taplo](https://taplo.tamasfe.dev/cli/installation/binary.html) for `toml`
-3. Run the following command to check formatting:
+4. Run the following command to check formatting:
 
 ```shellsession
 $ markdownlint-cli2 .
@@ -114,7 +123,15 @@ Summary: 0 error(s)
 
 _The `markdownlint-cli2` tool automatically uses the config file [.markdownlint-cli2.yaml](./.markdownlint-cli2.yaml)._
 \
-4. Run the following commands to verify and format code snippets:
+4. Run the following command to check TOC:
+
+```sh
+markdown-toc --maxdepth 4 --no-first1 --bullets "-" -i README.md && git diff --exit-code README.md
+markdown-toc --maxdepth 2 --no-first1 --bullets "-" -i RULES_DESCRIPTIONS.md && git diff --exit-code RULES_DESCRIPTIONS.md
+```
+
+\
+5. Run the following commands to verify and format code snippets:
 
 ```sh
 mdsf verify .
@@ -123,3 +140,6 @@ mdsf verify .
 ```sh
 mdsf format .
 ```
+
+_Note: Use `golang` for Go code snippets that are intentionally non-compilable.
+However, it is recommended to avoid this and use `go` whenever possible._

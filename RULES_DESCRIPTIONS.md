@@ -2,95 +2,107 @@
 
 List of all available rules.
 
-- [Description of available rules](#description-of-available-rules)
-  - [add-constant](#add-constant)
-  - [argument-limit](#argument-limit)
-  - [atomic](#atomic)
-  - [banned-characters](#banned-characters)
-  - [bare-return](#bare-return)
-  - [blank-imports](#blank-imports)
-  - [bool-literal-in-expr](#bool-literal-in-expr)
-  - [call-to-gc](#call-to-gc)
-  - [cognitive-complexity](#cognitive-complexity)
-  - [comment-spacings](#comment-spacings)
-  - [comments-density](#comments-density)
-  - [confusing-naming](#confusing-naming)
-  - [confusing-results](#confusing-results)
-  - [constant-logical-expr](#constant-logical-expr)
-  - [context-as-argument](#context-as-argument)
-  - [context-keys-type](#context-keys-type)
-  - [cyclomatic](#cyclomatic)
-  - [datarace](#datarace)
-  - [deep-exit](#deep-exit)
-  - [defer](#defer)
-  - [dot-imports](#dot-imports)
-  - [duplicated-imports](#duplicated-imports)
-  - [early-return](#early-return)
-  - [empty-block](#empty-block)
-  - [empty-lines](#empty-lines)
-  - [enforce-map-style](#enforce-map-style)
-  - [enforce-repeated-arg-type-style](#enforce-repeated-arg-type-style)
-  - [enforce-slice-style](#enforce-slice-style)
-  - [enforce-switch-style](#enforce-switch-style)
-  - [error-naming](#error-naming)
-  - [error-return](#error-return)
-  - [error-strings](#error-strings)
-  - [errorf](#errorf)
-  - [exported](#exported)
-  - [file-header](#file-header)
-  - [file-length-limit](#file-length-limit)
-  - [filename-format](#filename-format)
-  - [flag-parameter](#flag-parameter)
-  - [function-length](#function-length)
-  - [function-result-limit](#function-result-limit)
-  - [get-return](#get-return)
-  - [identical-branches](#identical-branches)
-  - [if-return](#if-return)
-  - [import-alias-naming](#import-alias-naming)
-  - [import-shadowing](#import-shadowing)
-  - [imports-blocklist](#imports-blocklist)
-  - [increment-decrement](#increment-decrement)
-  - [indent-error-flow](#indent-error-flow)
-  - [line-length-limit](#line-length-limit)
-  - [max-control-nesting](#max-control-nesting)
-  - [max-public-structs](#max-public-structs)
-  - [modifies-parameter](#modifies-parameter)
-  - [modifies-value-receiver](#modifies-value-receiver)
-  - [nested-structs](#nested-structs)
-  - [optimize-operands-order](#optimize-operands-order)
-  - [package-comments](#package-comments)
-  - [range-val-address](#range-val-address)
-  - [range-val-in-closure](#range-val-in-closure)
-  - [range](#range)
-  - [receiver-naming](#receiver-naming)
-  - [redefines-builtin-id](#redefines-builtin-id)
-  - [redundant-build-tag](#redundant-build-tag)
-  - [redundant-import-alias](#redundant-import-alias)
-  - [redundant-test-main-exit](#redundant-test-main-exit)
-  - [string-format](#string-format)
-  - [string-of-int](#string-of-int)
-  - [struct-tag](#struct-tag)
-  - [superfluous-else](#superfluous-else)
-  - [time-date](#time-date)
-  - [time-equal](#time-equal)
-  - [time-naming](#time-naming)
-  - [unchecked-type-assertion](#unchecked-type-assertion)
-  - [unconditional-recursion](#unconditional-recursion)
-  - [unexported-naming](#unexported-naming)
-  - [unexported-return](#unexported-return)
-  - [unhandled-error](#unhandled-error)
-  - [unnecessary-format](#unnecessary-format)
-  - [unnecessary-stmt](#unnecessary-stmt)
-  - [unreachable-code](#unreachable-code)
-  - [unused-parameter](#unused-parameter)
-  - [unused-receiver](#unused-receiver)
-  - [use-any](#use-any)
-  - [use-errors-new](#use-errors-new)
-  - [use-fmt-print](#use-fmt-print)
-  - [useless-break](#useless-break)
-  - [var-declaration](#var-declaration)
-  - [var-naming](#var-naming)
-  - [waitgroup-by-value](#waitgroup-by-value)
+<!-- toc -->
+
+- [add-constant](#add-constant)
+- [argument-limit](#argument-limit)
+- [atomic](#atomic)
+- [banned-characters](#banned-characters)
+- [bare-return](#bare-return)
+- [blank-imports](#blank-imports)
+- [bool-literal-in-expr](#bool-literal-in-expr)
+- [call-to-gc](#call-to-gc)
+- [cognitive-complexity](#cognitive-complexity)
+- [comment-spacings](#comment-spacings)
+- [comments-density](#comments-density)
+- [confusing-naming](#confusing-naming)
+- [confusing-results](#confusing-results)
+- [constant-logical-expr](#constant-logical-expr)
+- [context-as-argument](#context-as-argument)
+- [context-keys-type](#context-keys-type)
+- [cyclomatic](#cyclomatic)
+- [datarace](#datarace)
+- [deep-exit](#deep-exit)
+- [defer](#defer)
+- [dot-imports](#dot-imports)
+- [duplicated-imports](#duplicated-imports)
+- [early-return](#early-return)
+- [empty-block](#empty-block)
+- [empty-lines](#empty-lines)
+- [enforce-map-style](#enforce-map-style)
+- [enforce-repeated-arg-type-style](#enforce-repeated-arg-type-style)
+- [enforce-slice-style](#enforce-slice-style)
+- [enforce-switch-style](#enforce-switch-style)
+- [error-naming](#error-naming)
+- [error-return](#error-return)
+- [error-strings](#error-strings)
+- [errorf](#errorf)
+- [exported](#exported)
+- [file-header](#file-header)
+- [file-length-limit](#file-length-limit)
+- [filename-format](#filename-format)
+- [flag-parameter](#flag-parameter)
+- [function-length](#function-length)
+- [function-result-limit](#function-result-limit)
+- [get-return](#get-return)
+- [identical-branches](#identical-branches)
+- [identical-ifelseif-branches](#identical-ifelseif-branches)
+- [identical-ifelseif-conditions](#identical-ifelseif-conditions)
+- [identical-switch-branches](#identical-switch-branches)
+- [identical-switch-conditions](#identical-switch-conditions)
+- [if-return](#if-return)
+- [import-alias-naming](#import-alias-naming)
+- [import-shadowing](#import-shadowing)
+- [imports-blocklist](#imports-blocklist)
+- [increment-decrement](#increment-decrement)
+- [indent-error-flow](#indent-error-flow)
+- [inefficient-map-lookup](#inefficient-map-lookup)
+- [line-length-limit](#line-length-limit)
+- [max-control-nesting](#max-control-nesting)
+- [max-public-structs](#max-public-structs)
+- [modifies-parameter](#modifies-parameter)
+- [modifies-value-receiver](#modifies-value-receiver)
+- [nested-structs](#nested-structs)
+- [optimize-operands-order](#optimize-operands-order)
+- [package-comments](#package-comments)
+- [package-directory-mismatch](#package-directory-mismatch)
+- [range-val-address](#range-val-address)
+- [range-val-in-closure](#range-val-in-closure)
+- [range](#range)
+- [receiver-naming](#receiver-naming)
+- [redefines-builtin-id](#redefines-builtin-id)
+- [redundant-build-tag](#redundant-build-tag)
+- [redundant-import-alias](#redundant-import-alias)
+- [redundant-test-main-exit](#redundant-test-main-exit)
+- [string-format](#string-format)
+- [string-of-int](#string-of-int)
+- [struct-tag](#struct-tag)
+- [superfluous-else](#superfluous-else)
+- [time-date](#time-date)
+- [time-equal](#time-equal)
+- [time-naming](#time-naming)
+- [unchecked-type-assertion](#unchecked-type-assertion)
+- [unconditional-recursion](#unconditional-recursion)
+- [unexported-naming](#unexported-naming)
+- [unexported-return](#unexported-return)
+- [unhandled-error](#unhandled-error)
+- [unnecessary-format](#unnecessary-format)
+- [unnecessary-stmt](#unnecessary-stmt)
+- [unreachable-code](#unreachable-code)
+- [unsecure-url-scheme](#unsecure-url-scheme)
+- [unused-parameter](#unused-parameter)
+- [unused-receiver](#unused-receiver)
+- [use-any](#use-any)
+- [use-errors-new](#use-errors-new)
+- [use-fmt-print](#use-fmt-print)
+- [use-waitgroup-go](#use-waitgroup-go)
+- [useless-break](#useless-break)
+- [useless-fallthrough](#useless-fallthrough)
+- [var-declaration](#var-declaration)
+- [var-naming](#var-naming)
+- [waitgroup-by-value](#waitgroup-by-value)
+
+<!-- tocstop -->
 
 ## add-constant
 
@@ -105,7 +117,7 @@ _Configuration_:
 - `allowFloats` (`allowfloats`, `allow-floats`): (string) comma-separated list of allowed floats
 - `ignoreFuncs` (`ignorefuncs`, `ignore-funcs`): (string) comma-separated list of function names regexp patterns to exclude
 
-Examples:
+Configuration examples:
 
 ```toml
 [rule.add-constant]
@@ -128,7 +140,7 @@ Enforcing a maximum number of parameters helps to keep the code readable and mai
 
 _Configuration_: (int) the maximum number of parameters allowed per function.
 
-Example:
+Configuration example:
 
 ```toml
 [rule.argument-limit]
@@ -147,7 +159,7 @@ _Description_: Checks given banned characters in identifiers(func, var, const). 
 
 _Configuration_: This rule requires a slice of strings, the characters to ban.
 
-Example:
+Configuration example:
 
 ```toml
 [rule.banned-characters]
@@ -171,6 +183,32 @@ _Configuration_: N/A
 _Description_: Using Boolean literals (`true`, `false`) in logic expressions may make the code less readable.
 This rule suggests removing Boolean literals from logic expressions.
 
+### Examples
+
+Before (violation):
+
+```go
+if attachRequired == true {
+  // do something
+}
+
+if mustReply == false {
+  // do something
+}
+```
+
+After (fixed):
+
+```go
+if attachRequired {
+  // do something
+}
+
+if !mustReply {
+  // do something
+}
+```
+
 _Configuration_: N/A
 
 ## call-to-gc
@@ -190,7 +228,7 @@ Enforcing a maximum complexity per function helps to keep code readable and main
 
 _Configuration_: (int) the maximum function complexity
 
-Example:
+Configuration example:
 
 ```toml
 [rule.cognitive-complexity]
@@ -214,7 +252,7 @@ _Configuration_: ([]string) list of exceptions. For example, to accept comments 
 
 You need to add both `"mypragma:"` and `"+optional"` in the configuration
 
-Example:
+Configuration example:
 
 ```toml
 [rule.comment-spacings]
@@ -228,7 +266,7 @@ metric = _comment lines / (lines of code + comment lines) * 100_
 
 _Configuration_: (int) the minimum expected comments lines density.
 
-Example:
+Configuration example:
 
 ```toml
 [rule.comments-density]
@@ -244,6 +282,22 @@ _Configuration_: N/A
 ## confusing-results
 
 _Description_: Function or methods that return multiple, no named, values of the same type could induce error.
+
+### Examples
+
+Before (violation):
+
+```go
+// getPos yields the geographical position of this tag.
+func (t tag) getPos() (float32, float32)
+```
+
+After (fixed):
+
+```go
+// getPos yields the geographical position of this tag.
+func (t tag) getPos() (longitude float32, latitude float32)
+```
 
 _Configuration_: N/A
 
@@ -262,7 +316,7 @@ _Configuration_:
 
 - `allowTypesBefore` (`allowtypesbefore`, `allow-types-before`): (string) comma-separated list of types that may be before 'context.Context'
 
-Examples:
+Configuration examples:
 
 ```toml
 [rule.context-as-argument]
@@ -291,7 +345,7 @@ Enforcing a maximum complexity per function helps to keep code readable and main
 
 _Configuration_: (int) the maximum function complexity
 
-Example:
+Configuration example:
 
 ```toml
 [rule.cyclomatic]
@@ -335,7 +389,7 @@ These gotchas are [described here](https://blog.learngoprogramming.com/gotchas-o
 _Configuration_: By default, all warnings are enabled but it is possible selectively enable them through configuration.
 For example to enable only `call-chain` and `loop`:
 
-Examples:
+Configuration examples:
 
 ```toml
 [rule.defer]
@@ -358,7 +412,7 @@ _Configuration_:
 
 - `allowedPackages` (`allowedpackages`, `allowed-packages`): (list of strings) comma-separated list of allowed dot import packages
 
-Examples:
+Configuration examples:
 
 ```toml
 [rule.dot-imports]
@@ -417,7 +471,7 @@ _Configuration_: ([]string) rule flags. Available flags are:
 - `allowJump` (`allowjump`, `allow-jump`): suggest a new jump (`return`, `continue` or `break` statement) if it could unnest multiple statements.
 By default, only relocation of _existing_ jumps (i.e. from the `else` clause) are suggested.
 
-Examples:
+Configuration examples:
 
 ```toml
 [rule.early-return]
@@ -453,7 +507,7 @@ _Configuration_: (string) Specifies the enforced style for map initialization. T
 - "make": Enforces the usage of `make(map[type]type)`.
 - "literal": Enforces the usage of `map[type]type{}`.
 
-Example:
+Configuration example:
 
 ```toml
 [rule.enforce-map-style]
@@ -514,7 +568,7 @@ _Configuration_: (string) Specifies the enforced style for slice initialization.
 - "literal": Enforces the usage of `[]type{}`.
 - "nil": Enforces the usage of `var []type`.
 
-Example:
+Configuration example:
 
 ```toml
 [rule.enforce-slice-style]
@@ -531,7 +585,7 @@ _Configuration_: ([]string) Specifies what to enforced: occurrence and/or positi
 - "allowNoDefault": allows `switch` without `default` case clause.
 - "allowDefaultNotLast": allows `default` case clause to be not the last clause of the `switch`.
 
-Examples:
+Configuration examples:
 
 To enforce that all `switch` statements have a `default` clause as its the last case clause:
 
@@ -578,7 +632,7 @@ More [information here](https://go.dev/wiki/CodeReviewComments#error-strings).
 _Configuration_: ([]string) the list of additional error functions to check.
 The format of values is `package.FunctionName`.
 
-Example:
+Configuration example:
 
 ```toml
 [rule.error-strings]
@@ -614,7 +668,7 @@ by _repetitive_ in failure messages
 - `disableChecksOnTypes` (`disablechecksontypes`, `disable-checks-on-types`) disable all checks on type declarations
 - `disableChecksOnVariables` (`disablechecksonvariables`, `disable-checks-on-variables`) disable all checks on variable declarations
 
-Examples:
+Configuration examples:
 
 ```toml
 [rule.exported]
@@ -642,7 +696,7 @@ _Description_: This rule helps to enforce a common header for all source files i
 
 _Configuration_: (string) the header to look for in source files.
 
-Example:
+Configuration example:
 
 ```toml
 [rule.file-header]
@@ -659,7 +713,7 @@ _Configuration_:
 - `skipComments` (`skipcomments`, `skip-comments`): (bool) if true ignore and do not count lines containing just comments (default `false`);
 - `skipBlankLines` (`skipblanklines`, `skip-blank-lines`): (bool) if true ignore and do not count lines made up purely of whitespace (default `false`).
 
-Examples:
+Configuration examples:
 
 ```toml
 [rule.file-length-limit]
@@ -678,7 +732,7 @@ Optionally, the rule can be configured to enforce other forms.
 
 _Configuration_: (string) regular expression for source filenames.
 
-Example:
+Configuration example:
 
 ```toml
 [rule.filename-format]
@@ -699,7 +753,7 @@ _Description_: Functions too long (with many statements and/or lines) can be har
 
 _Configuration_: (int,int) the maximum allowed statements and lines. Must be non-negative integers. Set to 0 to disable the check
 
-Example:
+Configuration example:
 
 ```toml
 [rule.function-length]
@@ -714,7 +768,7 @@ _Description_: Functions returning too many results can be hard to understand/us
 
 _Configuration_: (int) the maximum allowed return values
 
-Example:
+Configuration example:
 
 ```toml
 [rule.function-result-limit]
@@ -730,6 +784,33 @@ _Configuration_: N/A
 ## identical-branches
 
 _Description_: An `if-then-else` conditional with identical implementations in both branches is an error.
+
+_Configuration_: N/A
+
+## identical-ifelseif-branches
+
+_Description_: an `if ... else if` chain with identical branches makes maintenance harder
+and might be a source of bugs. Duplicated branches should be consolidated in one.
+
+_Configuration_: N/A
+
+## identical-ifelseif-conditions
+
+_Description_: an `if ... else if` chain  with identical conditions can lead to
+unreachable code and is a potential source of bugs while making the code harder to read and maintain.
+
+_Configuration_: N/A
+
+## identical-switch-branches
+
+_Description_: a `switch` with identical branches makes maintenance harder
+and might be a source of bugs. Duplicated branches should be consolidated
+in one case clause.
+
+## identical-switch-conditions
+
+_Description_: a `switch` statement with cases with the same condition can lead to
+unreachable code and is a potential source of bugs while making the code harder to read and maintain.
 
 _Configuration_: N/A
 
@@ -757,14 +838,14 @@ _Note_: If both `allowRegex` and `denyRegex` are provided, the alias must comply
 If none are given (i.e. an empty map), the default value `^[a-z][a-z0-9]{0,}$` for allowRegex is used.
 Unknown keys will result in an error.
 
-Example (1):
+Configuration example (1):
 
 ```toml
 [rule.import-alias-naming]
 arguments = ["^[a-z][a-z0-9]{0,}$"]
 ```
 
-Examples (2):
+Configuration examples (2):
 
 ```toml
 [rule.import-alias-naming]
@@ -790,7 +871,7 @@ _Description_: Warns when importing block-listed packages.
 
 _Configuration_: block-list of package names (or regular expression package names).
 
-Example:
+Configuration example:
 
 ```toml
 [rule.imports-blocklist]
@@ -815,7 +896,7 @@ _Configuration_: ([]string) rule flags. Available flags are:
 
 - `preserveScope` (`preservescope`, `preserve-scope`): do not suggest refactorings that would increase variable scope
 
-Examples:
+Configuration examples:
 
 ```toml
 [rule.indent-error-flow]
@@ -827,13 +908,57 @@ arguments = ["preserveScope"]
 arguments = ["preserve-scope"]
 ```
 
+## inefficient-map-lookup
+
+_Description_: This rule identifies code that iteratively searches for a key in a map.
+
+This inefficiency is usually introduced when refactoring code from using a slice to a map.
+For example if during refactoring the `elements` slice is transformed into a map.
+
+```diff
+-       elements             []string
++       elements             map[string]float64
+```
+
+and then a loop over `elements` is changed in an obvious but inefficient way:
+
+```diff
+-       for _, e := range elements {
++       for e := range elements {
+                if e == someStaticValue {
+                        // do something
+                }
+        }
+```
+
+Configuration example:
+
+```go
+aMap := map[string]bool{}{}
+aValue := false
+
+// Inefficient map lookup
+for k := range aMap {
+  if k == aValue {
+    // do something
+  }
+}
+
+// Simpler and more efficient version
+if _, ok := aMap[aValue]; ok {
+  // do something
+}
+```
+
+_Configuration_: N/A
+
 ## line-length-limit
 
 _Description_: Warns in the presence of code lines longer than a configured maximum.
 
 _Configuration_: (int) maximum line length in characters.
 
-Example:
+Configuration example:
 
 ```toml
 [rule.line-length-limit]
@@ -846,7 +971,7 @@ _Description_: Warns if nesting level of control structures (`if-then-else`, `fo
 
 _Configuration_: (int) maximum accepted nesting level of control structures (defaults to 5)
 
-Example:
+Configuration example:
 
 ```toml
 [rule.max-control-nesting]
@@ -862,7 +987,7 @@ This rule warns on files declaring more than a configured, maximum number of pub
 
 _Configuration_: (int) the maximum allowed public structs
 
-Example:
+Configuration example:
 
 ```toml
 [rule.max-public-structs]
@@ -873,7 +998,8 @@ arguments = [3]
 
 _Description_: A function that modifies its parameters can be hard to understand.
 It can also be misleading if the arguments are passed by value by the caller.
-This rule warns when a function modifies one or more of its parameters.
+This rule warns when a function modifies one or more of its parameters or when
+parameters are passed to functions that modify them (e.g. `slices.Delete`).
 
 _Configuration_: N/A
 
@@ -921,6 +1047,48 @@ More [information here](https://go.dev/wiki/CodeReviewComments#package-comments)
 
 _Configuration_: N/A
 
+## package-directory-mismatch
+
+_Description_: It is considered a good practice to name a package after the directory containing it.
+This rule warns when the package name declared in the file does not match the name of the directory containing the file.
+
+The following cases are excluded from this check:
+
+- Package `main` (executable packages)
+- Files in `testdata` directories (at any level) - by default
+- Files directly in `internal` directories (but files in subdirectories of `internal` are checked)
+
+For test files (files with `_test` suffix), package name additionally checked if it matches directory name with  `_test` suffix appended.
+
+The rule normalizes both directory and package names before comparison by removing hyphens (`-`),
+underscores (`_`), and dots (`.`). This allows package `foo_barbuz` be equal with directory `foo-bar.buz`.
+
+For files in version directories (`v1`, `v2`, etc.), package name is checked if it matches either the version directory or its parent directory.
+
+_Configuration_: Named arguments for directory exclusions.
+
+Configuration examples:
+
+Default behavior excludes paths containing `testdata`
+
+```toml
+[rule.package-directory-mismatch]
+```
+
+Ignore specific directories with `ignore-directories`
+
+```toml
+[rule.package-directory-mismatch]
+arguments = [{ ignore-directories = ["testcases", "testinfo"] }]
+```
+
+Include all directories (`testdata` also)
+
+```toml
+[rule.package-directory-mismatch]
+arguments = [{ ignoreDirectories = [] }]
+```
+
 ## range-val-address
 
 _Description_: Range variables in a loop are reused at each iteration.
@@ -956,7 +1124,7 @@ _Configuration_: (optional) list of key-value-pair-map (`[]map[string]any`).
 
 - `maxLength` (`maxlength`, `max-length`): (int) max length of receiver name
 
-Examples:
+Configuration examples:
 
 ```toml
 [rule.receiver-naming]
@@ -1023,7 +1191,7 @@ If you need to inverse the semantics you can add a `!` just before the first `/`
 
 3. The third string (optional) is a **message** containing the purpose for the regex, which will be used in lint errors.
 
-Example:
+Configuration example:
 
 ```toml
 [rule.string-format]
@@ -1062,11 +1230,11 @@ _Configuration_: N/A
 
 _Description_: Struct tags are not checked at compile time.
 This rule spots errors in struct tags of the following types:
-asn1, bson, datastore, default, json, mapstructure, properties, protobuf, required, toml, url, validate, xml, yaml.
+asn1, bson, datastore, default, json, mapstructure, properties, protobuf, required, spanner, toml, url, validate, xml, yaml.
 
 _Configuration_: (optional) list of user defined options.
 
-Example:
+Configuration example:
 To accept the `inline` option in JSON tags (and `outline` and `gnu` in BSON tags) you must provide the following configuration
 
 ```toml
@@ -1083,7 +1251,7 @@ _Configuration_: ([]string) rule flags. Available flags are:
 
 - `preserveScope` (`preservescope`, `preserve-scope`): (string) do not suggest refactorings that would increase variable scope
 
-Examples:
+Configuration examples:
 
 ```toml
 [rule.superfluous-else]
@@ -1196,7 +1364,7 @@ foo, _ := bar(.*Baz).
 //   ^
 ```
 
-Examples:
+Configuration examples:
 
 ```toml
 [rule.unchecked-type-assertion]
@@ -1233,7 +1401,7 @@ _Description_: This rule warns when errors returned by a function are not explic
 
 _Configuration_: function names regexp patterns to ignore
 
-Example:
+Configuration example:
 
 ```toml
 [rule.unhandled-error]
@@ -1265,6 +1433,17 @@ _Description_: This rule spots and proposes to remove [unreachable code](https:/
 
 _Configuration_: N/A
 
+## unsecure-url-scheme
+
+_Description_: Checks for usage of potentially unsecure URL schemes (`http`, `ws`) in string literals.
+Using unencrypted URL schemes can expose sensitive data during transmission and
+make applications vulnerable to man-in-the-middle attacks.
+Secure alternatives like `https` should be preferred when possible.
+
+_Configuration_: N/A
+
+The rule will not warn on local URLs (`localhost`, `127.0.0.1`).
+
 ## unused-parameter
 
 _Description_: This rule warns on unused parameters. Functions or methods with unused parameters can be a symptom of an unfinished refactoring or a bug.
@@ -1272,7 +1451,7 @@ _Description_: This rule warns on unused parameters. Functions or methods with u
 _Configuration_: Supports arguments with single of `map[string]any` with option `allowRegex` (`allowregex`, `allow-regex`) to provide additional
 to `_` mask to allowed unused parameter names.
 
-Examples:
+Configuration examples:
 
 This allows any names starting with `_`, not just `_` itself:
 
@@ -1297,7 +1476,7 @@ _Description_: This rule warns on unused method receivers. Methods with unused r
 _Configuration_:
 Supports arguments with single of `map[string]any` with option `allowRegex` to provide additional to `_` mask to allowed unused receiver names.
 
-Examples:
+Configuration examples:
 
 This allows any names starting with `_`, not just `_` itself:
 
@@ -1336,6 +1515,18 @@ _Description_: This rule proposes to replace calls to built-in `print` and `prin
 
 _Configuration_: N/A
 
+## use-waitgroup-go
+
+_Description_: Since Go 1.25 the `sync` package proposes the [`WaitGroup.Go`](https://pkg.go.dev/sync#WaitGroup.Go) method.
+This method is a shorter and safer replacement for the idiom `wg.Add ... go { ... wg.Done ... }`.
+The rule proposes to replace these legacy idioms with calls to the new method.
+
+_Limitations_: The rule doesn't rely on type information but on variable names to identify waitgroups.
+This means the rule search for `wg` (the defacto standard name for wait groups);
+if the waitgroup variable is named differently than `wg` the rule will skip it.
+
+_Configuration_: N/A
+
 ## useless-break
 
 _Description_: This rule warns on useless `break` statements in case clauses of switch and select statements. Go,
@@ -1345,6 +1536,44 @@ Therefore, inserting a `break` at the end of a case clause has no effect.
 Because `break` statements are rarely used in case clauses, when switch or select statements are inside a for-loop,
 the programmer might wrongly assume that a `break` in a case clause will take the control out of the loop.
 The rule emits a specific warning for such cases.
+
+_Configuration_: N/A
+
+## useless-fallthrough
+
+_Description_: This rule warns on useless `fallthrough` statements in case clauses of switch statements.
+A `fallthrough` is considered _useless_ if it's the single statement of a case clause block.
+
+Go allows `switch` statements with clauses that group multiple cases.
+Thus, for example:
+
+```go
+switch category {
+  case "Lu":
+    fallthrough
+  case "Ll":
+    fallthrough    
+  case "Lt":
+    fallthrough
+  case "Lm": 
+    fallthrough
+  case "Lo":
+    return true
+  default:
+    return false
+}
+```
+
+can be written as
+
+```go
+switch category {
+  case "Lu", "Ll", "Lt", "Lm", "Lo":
+      return true
+  default:
+    return false
+}
+```
 
 _Configuration_: N/A
 
@@ -1374,7 +1603,7 @@ to forbid using the values from the list as package names additionally to the st
 
 By default, the rule behaves exactly as the alternative in `golint` but optionally, you can relax it (see [golint/lint/issues/89](https://github.com/golang/lint/issues/89)).
 
-Examples:
+Configuration examples:
 
 ```toml
 [rule.var-naming]
