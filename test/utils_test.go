@@ -1,4 +1,4 @@
-package test
+package test_test
 
 import (
 	"encoding/json"
@@ -228,7 +228,7 @@ func parseInstructions(t *testing.T, filename string, src []byte) []instruction 
 	for _, cg := range f.Comments {
 		ln := fset.Position(cg.Pos()).Line
 		raw := cg.Text()
-		for _, line := range strings.Split(raw, "\n") {
+		for line := range strings.SplitSeq(raw, "\n") {
 			if line == "" || strings.HasPrefix(line, "#") || strings.HasPrefix(line, "ignore") {
 				continue
 			}
@@ -411,4 +411,28 @@ func TestExportedType(t *testing.T) {
 			t.Errorf("exportedType(%v) = %t, want %t", tv.Type, got, test.exp)
 		}
 	}
+}
+
+// mkdirTempDotGit adds a temporary .git directory to the given root directory in testdata.
+// We can't commit .git directly because of the Git restrictions.
+func mkdirTempDotGit(t *testing.T, root string) {
+	t.Helper()
+
+	baseDir := filepath.Join("..", "testdata", root)
+	dir, err := filepath.Abs(baseDir)
+	if err != nil {
+		t.Fatalf("Failed to resolve abs path: %v", err)
+	}
+
+	gitDir := filepath.Join(dir, ".git")
+	if err := os.MkdirAll(gitDir, 0o755); err != nil {
+		t.Fatalf("Failed to create .git directory: %v", err)
+	}
+
+	t.Cleanup(func() {
+		err = os.RemoveAll(gitDir)
+		if err != nil {
+			t.Logf("Failed to remove %v: %v", gitDir, err)
+		}
+	})
 }

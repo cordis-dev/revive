@@ -50,7 +50,6 @@ If you disable them in the config file, revive will run over 6x faster than goli
   - [Sample Invocations](#sample-invocations)
   - [Comment Directives](#comment-directives)
   - [Configuration](#configuration)
-  - [Default Configuration](#default-configuration)
   - [Custom Configuration](#custom-configuration)
   - [Recommended Configuration](#recommended-configuration)
   - [Rule-level file excludes](#rule-level-file-excludes)
@@ -360,6 +359,15 @@ severity = "error"
 By default `revive` will enable only the linting rules that are named in the configuration file.
 For example, the previous configuration file makes `revive` to enable only _cyclomatic_ and _package-comments_ linting rules.
 
+To enable default rules you need to use:
+
+```toml
+enableDefaultRules = true
+```
+
+This will enable all rules available in `golint` and use their default configuration (i.e. the way they are hardcoded in `golint`).
+The default configuration of `revive` can be found at `defaults.toml`.
+
 To enable all available rules you need to add:
 
 ```toml
@@ -415,17 +423,6 @@ Arguments = [3]
 [rule.error-strings]
 Arguments = ["mypackage.Error"]
 ```
-
-### Default Configuration
-
-The default configuration of `revive` can be found at `defaults.toml`.
-This will enable all rules available in `golint` and use their default configuration (i.e. the way they are hardcoded in `golint`).
-
-```shell
-revive -config defaults.toml github.com/mgechev/revive
-```
-
-This will use the configuration file `defaults.toml`, the `default` formatter, and will run linting over the `github.com/mgechev/revive` package.
 
 ### Custom Configuration
 
@@ -533,6 +530,7 @@ List of all available rules. The rules ported from `golint` are left unchanged a
 | [`early-return`](./RULES_DESCRIPTIONS.md#early-return)          | []string   | Spots if-then-else statements where the predicate may be inverted to reduce nesting |    no    |  no   |
 | [`empty-block`](./RULES_DESCRIPTIONS.md#empty-block)         |  n/a   | Warns on empty code blocks                                       |    no    |  yes   |
 | [`empty-lines`](./RULES_DESCRIPTIONS.md#empty-lines)   | n/a | Warns when there are heading or trailing newlines in a block              |    no    |  no   |
+| [`epoch-naming`](./RULES_DESCRIPTIONS.md#epoch-naming)      |  n/a   | Enforces naming conventions for epoch time variables       |    no    |  yes   |
 | [`enforce-map-style`](./RULES_DESCRIPTIONS.md#enforce-map-style) |  string (defaults to "any")  |  Enforces consistent usage of `make(map[type]type)` or `map[type]type{}` for map initialization. Does not affect `make(map[type]type, size)` constructions. |    no    |  no   |
 | [`enforce-repeated-arg-type-style`](./RULES_DESCRIPTIONS.md#enforce-repeated-arg-type-style) |  string (defaults to "any")  |  Enforces consistent style for repeated argument and/or return value types. |    no    |  no   |
 | [`enforce-slice-style`](./RULES_DESCRIPTIONS.md#enforce-slice-style) |  string (defaults to "any")  |  Enforces consistent usage of `make([]type, 0)` or `[]type{}` for slice initialization. Does not affect `make(map[type]type, non_zero_len, or_non_zero_cap)` constructions. |    no    |  no   |
@@ -546,6 +544,7 @@ List of all available rules. The rules ported from `golint` are left unchanged a
 | [`file-length-limit`](./RULES_DESCRIPTIONS.md#file-length-limit) | map (optional)| Enforces a maximum number of lines per file |    no    |  no   |
 | [`filename-format`](./RULES_DESCRIPTIONS.md#filename-format) | regular expression (optional) | Enforces the formatting of filenames |   no    |  no   |
 | [`flag-parameter`](./RULES_DESCRIPTIONS.md#flag-parameter)      |  n/a   | Warns on boolean parameters that create a control coupling       |    no    |  no   |
+| [`forbidden-call-in-wg-go`](./RULES_DESCRIPTIONS.md#forbidden-call-in-wg-go)  |  n/a   | Warns on forbidden calls inside calls to wg.Go |    no    |  no   |
 | [`function-length`](./RULES_DESCRIPTIONS.md#function-length)          |  int, int (defaults to 50 statements, 75 lines)   |  Warns on functions exceeding the statements or lines max |    no    |  no   |
 | [`function-result-limit`](./RULES_DESCRIPTIONS.md#function-result-limit) |  int (defaults to 3)| Specifies the maximum number of results a function can return    |    no    |  no   |
 | [`get-return`](./RULES_DESCRIPTIONS.md#get-return)          |  n/a   | Warns on getters that do not yield any result                    |    no    |  no   |
@@ -590,6 +589,7 @@ List of all available rules. The rules ported from `golint` are left unchanged a
 | [`unexported-naming`](./RULES_DESCRIPTIONS.md#unexported-naming)          |  n/a   |  Warns on wrongly named un-exported symbols       |    no    |  no   |
 | [`unexported-return`](./RULES_DESCRIPTIONS.md#unexported-return)   |  n/a   | Warns when a public return is from unexported type.              |   yes    |  yes  |
 | [`unhandled-error`](./RULES_DESCRIPTIONS.md#unhandled-error)   | []string   | Warns on unhandled errors returned by function calls    |    no    |  yes   |
+| [`unnecessary-if`](./RULES_DESCRIPTIONS.md#unnecessary-if)    |  n/a   | Identifies `if-else` statements that can be replaced by simpler statements  |    no    |  no   |
 | [`unnecessary-format`](./RULES_DESCRIPTIONS.md#unnecessary-format)    |  n/a   | Identifies calls to formatting functions where the format string does not contain any formatting verbs          |    no    |  no   |
 | [`unnecessary-stmt`](./RULES_DESCRIPTIONS.md#unnecessary-stmt)    |  n/a   | Suggests removing or simplifying unnecessary statements          |    no    |  no   |
 | [`unreachable-code`](./RULES_DESCRIPTIONS.md#unreachable-code)    |  n/a   | Warns on unreachable code                                        |    no    |  no   |

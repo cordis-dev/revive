@@ -97,3 +97,16 @@ type uselessOptions struct {
 	// MATCH:83 /unknown option "" in xml tag/
 	// MATCH:86 /unknown option "" in yaml tag/
 }
+
+type CodecUserOptions struct {
+	ID   int    `codec:"user_id,myCodecOption"`
+	Name string `codec:"full_name,unknownOption"` // MATCH /unknown option "unknownOption" in codec tag/
+}
+
+type CborUserOptions struct {
+	InputsOk   string `cbor:"8,keyasint,myCborOption"`
+	OutputsOk  string `cbor:"-100,keyasint,unknownOption"` // MATCH /unknown option "unknownOption" in cbor tag/
+	ErrorsOk   string `cbor:"-1,keyasint"`
+	InputsOk2  string `cbor:"inputs,omitempty"`
+	OutputsOk2 string `cbor:",toarray"`
+}

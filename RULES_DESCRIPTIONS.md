@@ -29,6 +29,7 @@ List of all available rules.
 - [early-return](#early-return)
 - [empty-block](#empty-block)
 - [empty-lines](#empty-lines)
+- [epoch-naming](#epoch-naming)
 - [enforce-map-style](#enforce-map-style)
 - [enforce-repeated-arg-type-style](#enforce-repeated-arg-type-style)
 - [enforce-slice-style](#enforce-slice-style)
@@ -42,6 +43,7 @@ List of all available rules.
 - [file-length-limit](#file-length-limit)
 - [filename-format](#filename-format)
 - [flag-parameter](#flag-parameter)
+- [forbidden-call-in-wg-go](#forbidden-call-in-wg-go)
 - [function-length](#function-length)
 - [function-result-limit](#function-result-limit)
 - [get-return](#get-return)
@@ -86,6 +88,7 @@ List of all available rules.
 - [unexported-naming](#unexported-naming)
 - [unexported-return](#unexported-return)
 - [unhandled-error](#unhandled-error)
+- [unnecessary-if](#unnecessary-if)
 - [unnecessary-format](#unnecessary-format)
 - [unnecessary-stmt](#unnecessary-stmt)
 - [unreachable-code](#unreachable-code)
@@ -183,7 +186,7 @@ _Configuration_: N/A
 _Description_: Using Boolean literals (`true`, `false`) in logic expressions may make the code less readable.
 This rule suggests removing Boolean literals from logic expressions.
 
-### Examples
+### Examples (bool-literal-in-expr)
 
 Before (violation):
 
@@ -283,7 +286,7 @@ _Configuration_: N/A
 
 _Description_: Function or methods that return multiple, no named, values of the same type could induce error.
 
-### Examples
+### Examples (confusing-results)
 
 Before (violation):
 
@@ -493,6 +496,46 @@ _Configuration_: N/A
 
 _Description_: Sometimes `gofmt` is not enough to enforce a common formatting of a code-base;
 this rule warns when there are heading or trailing newlines in code blocks.
+
+_Configuration_: N/A
+
+## epoch-naming
+
+_Description_: Variables initialized with epoch time methods (`time.Now().Unix()`, `time.Now().UnixMilli()`,
+`time.Now().UnixMicro()`, `time.Now().UnixNano()`) should have names that clearly indicate their time unit to
+prevent confusion and potential bugs when working with different time scales.
+
+This rule enforces that variable names contain appropriate suffixes based on the method used:
+
+- `Unix()`: variable name should end with "Sec", "Second" or "Seconds"
+- `UnixMilli()`: variable name should end with "Milli" or "Ms"
+- `UnixMicro()`: variable name should end with "Micro", "Microsecond", "Microseconds" or "Us"
+- `UnixNano()`: variable name should end with "Nano" or "Ns"
+
+The rule checks variable declarations, short variable declarations (`:=`), and regular assignments (`=`).
+The suffix matching is case-insensitive and must appear at the end of the variable name.
+
+### Examples (epoch-naming)
+
+Before (violation):
+
+```go
+timestamp := time.Now().Unix()           // unclear which unit
+createdAt := time.Now().UnixMilli()      // missing unit indicator
+t := time.Now().UnixNano()               // lacks required suffix
+```
+
+After (fixed):
+
+```go
+timestampSec := time.Now().Unix()        // clearly seconds
+createdAtMs := time.Now().UnixMilli()    // clearly milliseconds
+tNano := time.Now().UnixNano()           // clearly nanoseconds
+
+// Alternative valid names
+createdSeconds := time.Now().Unix()      // full word is fine
+updatedMicro := time.Now().UnixMicro()   // microseconds
+```
 
 _Configuration_: N/A
 
@@ -747,6 +790,61 @@ This rule warns on boolean parameters that create a control coupling.
 
 _Configuration_: N/A
 
+## forbidden-call-in-wg-go
+
+_Description_: Since Go 1.25, it is possible to create goroutines with the method `waitgroup.Go`.
+The `Go` method calls a function in a new goroutine and adds (`Add`) that task to the WaitGroup.
+When the function returns, the task is removed (`Done`) from the WaitGroup.
+
+This rule ensures that functions don't panic as is specified
+in the [documentation of `WaitGroup.Go`](https://pkg.go.dev/sync#WaitGroup.Go).
+
+The rule also warns against a common mistake when refactoring legacy code:
+accidentally leaving behind a call to `WaitGroup.Done`, which can cause subtle bugs or panics.
+
+### Examples (forbidden-call-in-wg-go)
+
+Legacy code with a call to `wg.Done`:
+
+```go
+wg := sync.WaitGroup{}
+
+wg.Add(1)
+go func() {
+  doSomething()
+  wg.Done()
+}()
+
+wg.Wait
+```
+
+Refactored, incorrect, code:
+
+```go
+wg := sync.WaitGroup{}
+
+wg.Go(func() {
+  doSomething()
+  wg.Done()
+})
+
+wg.Wait
+```
+
+Fixed code:
+
+```go
+wg := sync.WaitGroup{}
+
+wg.Go(func() {
+  doSomething()
+})
+
+wg.Wait
+```
+
+_Configuration_: N/A
+
 ## function-length
 
 _Description_: Functions too long (with many statements and/or lines) can be hard to understand.
@@ -862,6 +960,9 @@ arguments = [{ allow-regex = "^[a-z][a-z0-9]{0,}$", deny-regex = '^v\d+$' }]
 _Description_: In Go it is possible to declare identifiers (packages, structs,
 interfaces, parameters, receivers, variables, constants...) that conflict with the
 name of an imported package. This rule spots identifiers that shadow an import.
+
+The rule ignores versioned import paths such as `k8s.io/api/core/v1` when `v1` is the package name,
+which allows identifiers like `v1`. This is a deliberate trade-off to keep the rule simple.
 
 _Configuration_: N/A
 
@@ -1228,18 +1329,48 @@ _Configuration_: N/A
 
 ## struct-tag
 
-_Description_: Struct tags are not checked at compile time.
-This rule spots errors in struct tags of the following types:
-asn1, bson, datastore, default, json, mapstructure, properties, protobuf, required, spanner, toml, url, validate, xml, yaml.
+_Description_: The rule spots errors in struct tags.
+This is useful because struct tags are not checked at compile time.
 
-_Configuration_: (optional) list of user defined options.
+The list of [supported tags](https://go.dev/wiki/Well-known-struct-tags):
+
+| Tag           | Documentation                                                            |
+| ------------- | ------------------------------------------------------------------------ |
+| `asn1`         | <https://pkg.go.dev/encoding/asn1>                                      |
+| `bson`         | <https://pkg.go.dev/go.mongodb.org/mongo-driver/bson>                   |
+| `cbor`         | <https://pkg.go.dev/github.com/fxamacker/cbor/v2>                   |
+| `datastore`    | <https://pkg.go.dev/cloud.google.com/go/datastore>                      |
+| `default`      | The type of "default" must match the type of the field.                 |
+| `json`         | <https://pkg.go.dev/encoding/json>                                      |
+| `mapstructure` | <https://pkg.go.dev/github.com/mitchellh/mapstructure>                  |
+| `properties`   | <https://pkg.go.dev/github.com/magiconair/properties#Properties.Decode> |
+| `protobuf`     | <https://github.com/golang/protobuf>                                    |
+| `required`     | Should be only "true" or "false".                                       |
+| `spanner`      | <https://pkg.go.dev/cloud.google.com/go/spanner>                        |
+| `toml`         | <https://pkg.go.dev/github.com/pelletier/go-toml/v2>                    |
+| `url`          | <https://github.com/google/go-querystring>                              |
+| `validate`     | <https://github.com/go-playground/validator>                            |
+| `xml`          | <https://pkg.go.dev/encoding/xml>                                       |
+| `yaml`         | <https://pkg.go.dev/gopkg.in/yaml.v2>                                   |
+
+_Configuration_: (optional) The list of struct tags that can be accepted by the rule additionally to the supported tags.
 
 Configuration example:
+
 To accept the `inline` option in JSON tags (and `outline` and `gnu` in BSON tags) you must provide the following configuration
 
 ```toml
 [rule.struct-tag]
 arguments = ["json,inline", "bson,outline,gnu"]
+```
+
+To prevent a tag from being checked, simply add a `!` before its name.
+For example, to instruct the rule not to check `validate` tags
+(and accept `outline` and `gnu` in BSON tags) you can provide the following configuration
+
+```toml
+[rule.struct-tag]
+arguments = ["!validate", "bson,outline,gnu"]
 ```
 
 ## superfluous-else
@@ -1414,6 +1545,39 @@ arguments = [
 ]
 ```
 
+## unnecessary-if
+
+_Description_: Detects unnecessary `if-else` statements that return or assign a boolean value
+based on a condition and suggests a simplified, direct return or assignment.
+The `if-else` block is redundant because the condition itself is already a boolean expression.
+The simplified version is immediately clearer, more idiomatic, and reduces cognitive load for the reader.
+
+### Examples (unnecessary-if)
+
+```go
+if y <= 0 {
+  z = true
+} else {
+  z = false
+}
+
+if x > 10 {
+  return false
+} else {
+  return true
+}
+```
+
+Fixed code:
+
+```go
+z = y <= 0
+
+return x <= 10
+```
+
+_Configuration_: N/A
+
 ## unnecessary-format
 
 _Description_: This rule identifies calls to formatting functions where the format string does not contain any formatting verbs
@@ -1511,7 +1675,7 @@ _Configuration_: N/A
 _Description_: This rule proposes to replace calls to built-in `print` and `println` with their equivalents from `fmt` standard package.
 
 `print` and `println` built-in functions are not recommended for use-cases other than
-[language boostraping and are not guaranteed to stay in the language](https://go.dev/ref/spec#Bootstrapping).
+[language bootstrapping and are not guaranteed to stay in the language](https://go.dev/ref/spec#Bootstrapping).
 
 _Configuration_: N/A
 
@@ -1597,9 +1761,15 @@ of functions, variables, consts, and structs handle known initialisms (e.g., JSO
 When `skipInitialismNameChecks` is set to true, the rule allows names like `readJson`, `HttpMethod` etc.
 In the map, you can add a boolean `upperCaseConst` (`uppercaseconst`, `upper-case-const`) parameter to allow `UPPER_CASE` for `const`.
 You can also add a boolean `skipPackageNameChecks` (`skippackagenamechecks`, `skip-package-name-checks`) to skip package name checks.
-When `skipPackageNameChecks` is false (the default), you can configure `extraBadPackageNames` (`extrabadpackagenames`, `extra-bad-package-names`)
-to forbid using the values from the list as package names additionally to the standard meaningless ones:
-"common", "interfaces", "misc", "types", "util", "utils".
+When `skipPackageNameChecks` is false (the default), you can configure
+`extraBadPackageNames` (`extrabadpackagenames`, `extra-bad-package-names`)
+to forbid using the values from the list as package names additionally
+to the standard meaningless ones: "common", "interfaces", "misc",
+"types", "util", "utils".
+When `skipPackageNameCollisionWithGoStd`
+(`skippackagenamecollisionwithgostd`, `skip-package-name-collision-with-go-std`)
+is set to true, the rule disables checks on package names that collide
+with Go standard library packages.
 
 By default, the rule behaves exactly as the alternative in `golint` but optionally, you can relax it (see [golint/lint/issues/89](https://github.com/golang/lint/issues/89)).
 
@@ -1643,6 +1813,11 @@ arguments = [[], [], [{ skip-package-name-checks = true }]]
 ```toml
 [rule.var-naming]
 arguments = [[], [], [{ extra-bad-package-names = ["helpers", "models"] }]]
+```
+
+```toml
+[rule.var-naming]
+arguments = [[], [], [{ skip-package-name-collision-with-go-std = true }]]
 ```
 
 ## waitgroup-by-value
