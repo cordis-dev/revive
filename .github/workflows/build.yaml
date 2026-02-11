@@ -3,9 +3,20 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
+    paths:
+      - '**.go'
+      - 'go.mod'
+      - 'go.sum'
+      - 'tools/**'
+      - 'Makefile'
+      - 'Dockerfile'
+      - '.github/workflows/build.yaml'
   push:
     branches:
       - master
+
+permissions:
+  contents: read
 
 jobs:
   build:
