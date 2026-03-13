@@ -421,6 +421,10 @@ func TestGetConfig(t *testing.T) {
 				confPath:  "invalidExcludePattern.toml",
 				wantError: "error in config of rule [var-naming]",
 			},
+			"enableAllRules and enableDefaultRules both set": {
+				confPath:  "enableAllAndDefault.toml",
+				wantError: "config options enableAllRules and enableDefaultRules cannot be combined",
+			},
 		} {
 			t.Run(name, func(t *testing.T) {
 				_, err := config.GetConfig(filepath.Join("testdata", tc.confPath))
@@ -438,7 +442,7 @@ func TestGetLintingRules(t *testing.T) {
 		// len of defaultRules
 		defaultRulesCount = 23
 		// len of allRules: update this when adding new rules
-		allRulesCount = 101
+		allRulesCount = 102
 	)
 
 	tt := map[string]struct {
@@ -512,15 +516,6 @@ func TestGetLintingRules(t *testing.T) {
 			},
 			wantDisabledRules: []string{
 				"deep-exit", // non-default rule
-			},
-		},
-		"enableAllRules and enableDefaultRules both set": {
-			confPath:       "enableAllAndDefault.toml",
-			wantRulesCount: allRulesCount,
-			wantEnabledRules: []string{
-				"var-declaration",  // default rule
-				"package-comments", // default rule
-				"deep-exit",        // non-default rule
 			},
 		},
 		"enableDefaultRules plus rule already in defaults": {
