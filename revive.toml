@@ -1,11 +1,11 @@
 # This is the configuration for the revive linter used for linting the revive's codebase itself.
 # See .github/workflows/lint.yaml.
 
-ignoreGeneratedHeader = false
+ignore-generated-header = false
 severity = "warning"
 confidence = 0.8
-errorCode = 1
-warningCode = 1
+error-code = 1
+warning-code = 1
 
 [rule.add-constant]
     disabled = true
@@ -85,6 +85,7 @@ warningCode = 1
 [rule.optimize-operands-order]
 [rule.package-comments]
 [rule.package-directory-mismatch]
+[rule.package-naming]
 [rule.range]
 [rule.range-val-address]
 [rule.range-val-in-closure]

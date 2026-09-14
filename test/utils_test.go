@@ -35,6 +35,22 @@ func configureRule(tb testing.TB, rule lint.Rule, arguments lint.Arguments) {
 
 func testRule(tb testing.TB, filename string, rule lint.Rule, config ...*lint.RuleConfig) {
 	tb.Helper()
+	var ruleConfig lint.RuleConfig
+	if len(config) > 0 {
+		ruleConfig = *config[0]
+	}
+
+	lintConfig := lint.Config{
+		Rules: map[string]lint.RuleConfig{
+			rule.Name(): ruleConfig,
+		},
+	}
+
+	testRuleWithLintConfig(tb, filename, rule, lintConfig)
+}
+
+func testRuleWithLintConfig(tb testing.TB, filename string, rule lint.Rule, config lint.Config) {
+	tb.Helper()
 
 	baseDir := filepath.Join("..", "testdata", filepath.Dir(filename))
 	filename = filepath.Base(filename) + ".go"
@@ -44,52 +60,42 @@ func testRule(tb testing.TB, filename string, rule lint.Rule, config ...*lint.Ru
 		tb.Fatalf("Bad filename path in test for %s: %v", rule.Name(), err)
 	}
 
-	var ruleConfig lint.RuleConfig
-	c := map[string]lint.RuleConfig{}
-	if len(config) > 0 {
-		ruleConfig = *config[0]
-		c[rule.Name()] = ruleConfig
-	}
-	configureRule(tb, rule, ruleConfig.Arguments)
+	configureRule(tb, rule, config.Rules[rule.Name()].Arguments)
 
 	ins := parseInstructions(tb, fullFilePath, src)
 	if ins == nil {
-		assertSuccess(tb, fullFilePath, []lint.Rule{rule}, c)
+		assertSuccess(tb, fullFilePath, []lint.Rule{rule}, config)
 		return
 	}
-	assertFailures(tb, fullFilePath, []lint.Rule{rule}, c, ins)
+	assertFailures(tb, fullFilePath, []lint.Rule{rule}, config, ins)
 }
 
-func assertSuccess(tb testing.TB, filePath string, rules []lint.Rule, config map[string]lint.RuleConfig) {
+func assertSuccess(tb testing.TB, filePath string, rules []lint.Rule, config lint.Config) {
 	tb.Helper()
 
 	l := lint.New(os.ReadFile, 0)
 
-	ps, err := l.Lint([][]string{{filePath}}, rules, lint.Config{
-		Rules: config,
-	})
+	ps, err := l.Lint([][]string{{filePath}}, rules, config)
 	if err != nil {
 		tb.Errorf("Linting %s: %v", filePath, err)
 		return
 	}
 
-	failures := ""
+	var failures []string
 	for p := range ps {
-		failures += p.Failure
+		failures = append(failures, p.Failure)
 	}
-	if failures != "" {
-		tb.Errorf("Expected the rule to pass but got the following failures: %s", failures)
+	if len(failures) > 0 {
+		tb.Errorf("Expected the rule to pass but got the following failures: %s", strings.Join(failures, ", "))
 	}
 }
 
-func assertFailures(tb testing.TB, filePath string, rules []lint.Rule, config map[string]lint.RuleConfig, ins []instruction) {
+func assertFailures(tb testing.TB, filePath string, rules []lint.Rule, config lint.Config, ins []instruction) {
 	tb.Helper()
 
 	l := lint.New(os.ReadFile, 0)
 
-	ps, err := l.Lint([][]string{{filePath}}, rules, lint.Config{
-		Rules: config,
-	})
+	ps, err := l.Lint([][]string{{filePath}}, rules, config)
 	if err != nil {
 		tb.Errorf("Linting %s: %v", filePath, err)
 		return

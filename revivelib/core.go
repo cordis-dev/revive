@@ -105,6 +105,7 @@ func (r *Revive) Lint(patterns ...*LintPattern) (<-chan lint.Failure, error) {
 
 		return contents, nil
 	}, r.maxOpenFiles)
+	revive.SetLogger(r.logger)
 
 	failures, err := revive.Lint(packages, r.lintingRules, *r.config)
 	if err != nil {
@@ -148,11 +149,7 @@ func (r *Revive) Format(
 			exitCode = conf.WarningCode
 		}
 
-		if c, ok := conf.Rules[failure.RuleName]; ok && c.Severity == lint.SeverityError {
-			exitCode = conf.ErrorCode
-		}
-
-		if c, ok := conf.Directives[failure.RuleName]; ok && c.Severity == lint.SeverityError {
+		if failure.SeverityFor(conf) == lint.SeverityError {
 			exitCode = conf.ErrorCode
 		}
 
