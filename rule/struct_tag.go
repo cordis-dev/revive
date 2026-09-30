@@ -97,6 +97,8 @@ func (checkCtx *checkContext) addCommonOption(opt string) {
 	checkCtx.commonOptions[opt] = true
 }
 
+var _ lint.ConfigurableRule = (*StructTagRule)(nil)
+
 // Configure validates the rule configuration, and configures the rule accordingly.
 //
 // Configuration implements the [lint.ConfigurableRule] interface.
@@ -446,7 +448,7 @@ const structTagCodecSpecialField = "_struct"
 
 func checkCodecTag(checkCtx *checkContext, tag *structtag.Tag, field *ast.Field) (message string, succeeded bool) {
 	fieldNames := field.Names
-	mustAddToCommonOptions := len(fieldNames) == 1 && fieldNames[0].Name == structTagCodecSpecialField // see https://github.com/mgechev/revive/issues/1477#issuecomment-3191493076
+	mustAddToCommonOptions := len(fieldNames) == 1 && fieldNames[0].Name == structTagCodecSpecialField // see https://github.com/revive-lint/revive/issues/1477#issuecomment-3191493076
 	for _, opt := range tag.Options {
 		if mustAddToCommonOptions {
 			checkCtx.addCommonOption(opt)
@@ -796,6 +798,7 @@ func (w lintStructTagRule) addFailureWithTagKey(n ast.Node, msg, tagKey string) 
 
 func (w lintStructTagRule) addFailuref(n ast.Node, msg string, args ...any) {
 	w.onFailure(lint.Failure{
+		Category:   lint.FailureCategoryBadPractice,
 		Node:       n,
 		Failure:    fmt.Sprintf(msg, args...),
 		Confidence: 1,
